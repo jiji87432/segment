@@ -30,8 +30,7 @@ public class EhCache implements Cache, CacheEventListener {
 		this.listener = listener;
 	}
 
-	@SuppressWarnings("rawtypes")
-	public List keys() throws CacheException {
+	public List<?> keys() throws CacheException {
 		return this.cache.getKeys();
 	}
 
@@ -115,12 +114,8 @@ public class EhCache implements Cache, CacheEventListener {
 		}
 	}
 
-	/* (non-Javadoc)
-	 * @see net.oschina.j2cache.Cache#batchRemove(java.util.List)
-	 */
 	@Override
-	@SuppressWarnings("rawtypes")
-	public void evict(List keys) throws CacheException {
+	public void evict(List<?> keys) throws CacheException {
 		cache.removeAll(keys);
 	}
 

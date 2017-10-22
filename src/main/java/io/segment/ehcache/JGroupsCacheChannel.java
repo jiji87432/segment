@@ -176,8 +176,7 @@ public class JGroupsCacheChannel extends ReceiverAdapter implements CacheExpired
 	 * @param region: Cache region name
 	 * @return key list
 	 */
-	@SuppressWarnings("rawtypes")
-	public List keys(String region) throws CacheException {
+	public List<?> keys(String region) throws CacheException {
 		return CacheManager.keys(LEVEL_1, region);
 	}
 	
