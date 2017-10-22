@@ -7,7 +7,7 @@ import io.segment.support.CacheObject;
 import java.util.List;
 
 @NPI
-public interface CacheChannel {
+public interface SegmentChannel {
 
 	public final static byte LEVEL_1 = 1;
 	public final static byte LEVEL_2 = 2;

@@ -1,8 +1,8 @@
 package io.segment;
 
-import io.segment.ehcache.JGroupsCacheChannel;
+import io.segment.ehcache.JGroupsSegmentChannel;
 import io.segment.exception.CacheException;
-import io.segment.redis.RedisCacheChannel;
+import io.segment.redis.RedisSegmentChannel;
 import io.segment.support.CacheManager;
 
 import java.io.IOException;
@@ -22,7 +22,7 @@ public class Segment {
 	private final static Logger log = LoggerFactory.getLogger(Segment.class);
 
 	private final static String CONFIG_FILE = "/segment.properties";
-	private final static CacheChannel channel;
+	private final static SegmentChannel channel;
 	private final static Properties config;
 
 	static {
@@ -30,9 +30,9 @@ public class Segment {
 			config = loadConfig();
 			String cache_broadcast = config.getProperty("cache.broadcast");
 			if ("redis".equalsIgnoreCase(cache_broadcast)) {
-				channel = RedisCacheChannel.getInstance();
+				channel = RedisSegmentChannel.getInstance();
 			} else if ("jgroups".equalsIgnoreCase(cache_broadcast)) {
-				channel = JGroupsCacheChannel.getInstance();
+				channel = JGroupsSegmentChannel.getInstance();
 			} else {
 				throw new CacheException("Cache Channel not defined. name = " + cache_broadcast);
 			}
@@ -41,7 +41,7 @@ public class Segment {
 		}
 	}
 
-	public static CacheChannel getChannel(){
+	public static SegmentChannel getChannel(){
 		return channel;
 	}
 

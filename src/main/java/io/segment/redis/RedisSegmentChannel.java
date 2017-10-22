@@ -1,7 +1,7 @@
 package io.segment.redis;
 
 import io.neural.extension.Extension;
-import io.segment.CacheChannel;
+import io.segment.SegmentChannel;
 import io.segment.Segment;
 import io.segment.exception.CacheException;
 import io.segment.support.CacheExpiredListener;
@@ -23,13 +23,13 @@ import redis.clients.util.SafeEncoder;
  * @author lry
  */
 @Extension("redis")
-public class RedisCacheChannel extends BinaryJedisPubSub implements CacheExpiredListener, CacheChannel {
+public class RedisSegmentChannel extends BinaryJedisPubSub implements CacheExpiredListener, SegmentChannel {
 
-    private final static Logger log = LoggerFactory.getLogger(RedisCacheChannel.class);
+    private final static Logger log = LoggerFactory.getLogger(RedisSegmentChannel.class);
 
     private String name;
     private static String channel = Segment.getConfig().getProperty("redis.channel_name");
-    private final static RedisCacheChannel instance = new RedisCacheChannel("default");
+    private final static RedisSegmentChannel instance = new RedisSegmentChannel("default");
     private final Thread thread_subscribe;
 
     private RedisCacheProxy redisCacheProxy;
@@ -39,7 +39,7 @@ public class RedisCacheChannel extends BinaryJedisPubSub implements CacheExpired
      *
      * @return 返回 CacheChannel 单实例
      */
-    public final static RedisCacheChannel getInstance() {
+    public final static RedisSegmentChannel getInstance() {
         return instance;
     }
 
@@ -48,7 +48,7 @@ public class RedisCacheChannel extends BinaryJedisPubSub implements CacheExpired
      *
      * @param name : 缓存实例名称
      */
-    private RedisCacheChannel(String name) throws CacheException {
+    private RedisSegmentChannel(String name) throws CacheException {
         this.name = name;
         try {
             long ct = System.currentTimeMillis();
@@ -57,7 +57,7 @@ public class RedisCacheChannel extends BinaryJedisPubSub implements CacheExpired
             thread_subscribe = new Thread(new Runnable() {
                 @Override
                 public void run() {
-                    redisCacheProxy.subscribe(RedisCacheChannel.this, SafeEncoder.encode(channel));
+                    redisCacheProxy.subscribe(RedisSegmentChannel.this, SafeEncoder.encode(channel));
                 }
             });
 

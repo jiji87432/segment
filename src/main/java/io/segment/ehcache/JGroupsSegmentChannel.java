@@ -1,7 +1,7 @@
 package io.segment.ehcache;
 
 import io.neural.extension.Extension;
-import io.segment.CacheChannel;
+import io.segment.SegmentChannel;
 import io.segment.exception.CacheException;
 import io.segment.support.CacheExpiredListener;
 import io.segment.support.CacheManager;
@@ -25,20 +25,20 @@ import org.slf4j.LoggerFactory;
  * @author lry
  */
 @Extension("jgroups")
-public class JGroupsCacheChannel extends ReceiverAdapter implements CacheExpiredListener, CacheChannel {
+public class JGroupsSegmentChannel extends ReceiverAdapter implements CacheExpiredListener, SegmentChannel {
 
-	private final static Logger log = LoggerFactory.getLogger(JGroupsCacheChannel.class);
+	private final static Logger log = LoggerFactory.getLogger(JGroupsSegmentChannel.class);
 	private final static String CONFIG_XML = "/network.xml";
 	
 	private String name;
 	private JChannel channel;
-	private final static JGroupsCacheChannel instance = new JGroupsCacheChannel("default");
+	private final static JGroupsSegmentChannel instance = new JGroupsSegmentChannel("default");
 	
 	/**
 	 * 单例方法
 	 * @return 返回 CacheChannel 单实例
 	 */
-	public final static JGroupsCacheChannel getInstance(){
+	public final static JGroupsSegmentChannel getInstance(){
 		return instance;
 	}
 	
@@ -46,14 +46,14 @@ public class JGroupsCacheChannel extends ReceiverAdapter implements CacheExpired
 	 * 初始化缓存通道并连接
 	 * @param name: 缓存实例名称
 	 */
-	private JGroupsCacheChannel(String name) throws CacheException {
+	private JGroupsSegmentChannel(String name) throws CacheException {
 		this.name = name;
 		try{
 			CacheManager.initCacheProvider(this);
 			
 			long ct = System.currentTimeMillis();
 			
-			URL xml = CacheChannel.class.getResource(CONFIG_XML);
+			URL xml = SegmentChannel.class.getResource(CONFIG_XML);
 			if(xml == null)
 				xml = getClass().getClassLoader().getParent().getResource(CONFIG_XML);
 			channel = new JChannel(xml);
