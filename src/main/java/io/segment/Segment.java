@@ -1,6 +1,6 @@
 package io.segment;
 
-import io.segment.ehcache.JGroupsSegmentChannel;
+import io.segment.ehcache.JgroupsSegmentChannel;
 import io.segment.exception.CacheException;
 import io.segment.redis.RedisSegmentChannel;
 import io.segment.support.CacheManager;
@@ -32,7 +32,7 @@ public class Segment {
 			if ("redis".equalsIgnoreCase(cache_broadcast)) {
 				channel = RedisSegmentChannel.getInstance();
 			} else if ("jgroups".equalsIgnoreCase(cache_broadcast)) {
-				channel = JGroupsSegmentChannel.getInstance();
+				channel = JgroupsSegmentChannel.getInstance();
 			} else {
 				throw new CacheException("Cache Channel not defined. name = " + cache_broadcast);
 			}

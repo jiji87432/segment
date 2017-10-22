@@ -25,20 +25,20 @@ import org.slf4j.LoggerFactory;
  * @author lry
  */
 @Extension("jgroups")
-public class JGroupsSegmentChannel extends ReceiverAdapter implements CacheExpiredListener, SegmentChannel {
+public class JgroupsSegmentChannel extends ReceiverAdapter implements CacheExpiredListener, SegmentChannel {
 
-	private final static Logger log = LoggerFactory.getLogger(JGroupsSegmentChannel.class);
+	private final static Logger log = LoggerFactory.getLogger(JgroupsSegmentChannel.class);
 	private final static String CONFIG_XML = "/network.xml";
 	
 	private String name;
 	private JChannel channel;
-	private final static JGroupsSegmentChannel instance = new JGroupsSegmentChannel("default");
+	private final static JgroupsSegmentChannel instance = new JgroupsSegmentChannel("default");
 	
 	/**
 	 * 单例方法
 	 * @return 返回 CacheChannel 单实例
 	 */
-	public final static JGroupsSegmentChannel getInstance(){
+	public final static JgroupsSegmentChannel getInstance(){
 		return instance;
 	}
 	
@@ -46,7 +46,7 @@ public class JGroupsSegmentChannel extends ReceiverAdapter implements CacheExpir
 	 * 初始化缓存通道并连接
 	 * @param name: 缓存实例名称
 	 */
-	private JGroupsSegmentChannel(String name) throws CacheException {
+	private JgroupsSegmentChannel(String name) throws CacheException {
 		this.name = name;
 		try{
 			CacheManager.initCacheProvider(this);
