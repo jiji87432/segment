@@ -3,7 +3,7 @@ package io.segment.redis;
 import io.neural.extension.Extension;
 import io.segment.CacheChannel;
 import io.segment.Segment;
-import io.segment.support.CacheException;
+import io.segment.exception.CacheException;
 import io.segment.support.CacheExpiredListener;
 import io.segment.support.CacheManager;
 import io.segment.support.CacheObject;

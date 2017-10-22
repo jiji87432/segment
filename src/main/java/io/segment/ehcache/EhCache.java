@@ -2,7 +2,7 @@ package io.segment.ehcache;
 
 import io.neural.extension.Extension;
 import io.segment.Cache;
-import io.segment.support.CacheException;
+import io.segment.exception.CacheException;
 import io.segment.support.CacheExpiredListener;
 
 import java.util.List;

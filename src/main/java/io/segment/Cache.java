@@ -1,7 +1,7 @@
 package io.segment;
 
 import io.neural.extension.NPI;
-import io.segment.support.CacheException;
+import io.segment.exception.CacheException;
 
 import java.util.List;
 

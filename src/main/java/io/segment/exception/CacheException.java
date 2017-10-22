@@ -1,4 +1,4 @@
-package io.segment.support;
+package io.segment.exception;
 
 /**
  * 缓存相关的异常

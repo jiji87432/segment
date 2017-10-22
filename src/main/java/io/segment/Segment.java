@@ -1,8 +1,8 @@
 package io.segment;
 
 import io.segment.ehcache.JGroupsCacheChannel;
+import io.segment.exception.CacheException;
 import io.segment.redis.RedisCacheChannel;
-import io.segment.support.CacheException;
 import io.segment.support.CacheManager;
 
 import java.io.IOException;

@@ -4,6 +4,7 @@ import io.segment.Cache;
 import io.segment.CacheFactory;
 import io.segment.Segment;
 import io.segment.ehcache.EhCacheFactory;
+import io.segment.exception.CacheException;
 import io.segment.redis.RedisCacheFactory;
 
 import java.util.Enumeration;

@@ -4,9 +4,9 @@ import io.neural.extension.Extension;
 import io.segment.Cache;
 import io.segment.CacheFactory;
 import io.segment.Segment;
+import io.segment.exception.CacheException;
 import io.segment.redis.support.RedisClientFactoryAdapter;
 import io.segment.redis.support.RedisPoolConfig;
-import io.segment.support.CacheException;
 import io.segment.support.CacheExpiredListener;
 
 import java.util.Properties;

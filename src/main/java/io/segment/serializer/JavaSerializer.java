@@ -1,7 +1,7 @@
 package io.segment.serializer;
 
 import io.neural.extension.Extension;
-import io.segment.support.CacheException;
+import io.segment.exception.CacheException;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
