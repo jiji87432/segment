@@ -5,7 +5,7 @@ import io.neural.extension.NPI;
 import java.io.Closeable;
 
 @NPI
-public interface RedisClientFactory<C extends RedisClient> extends Closeable {
+public interface RedisTransporterFactory<C extends RedisTransporter> extends Closeable {
 
 	void build();
 

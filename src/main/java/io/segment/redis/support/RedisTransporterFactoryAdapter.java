@@ -1,8 +1,8 @@
 package io.segment.redis.support;
 
-import io.segment.redis.support.cluster.RedisClusterFactory;
-import io.segment.redis.support.sharded.RedisShardedFactory;
-import io.segment.redis.support.single.RedisSingleFactory;
+import io.segment.redis.support.cluster.ClusterRedisTransporterFactory;
+import io.segment.redis.support.sharded.ShardedRedisTransporterFactory;
+import io.segment.redis.support.single.SingleRedisTransporterFactory;
 
 import java.io.IOException;
 
@@ -11,15 +11,15 @@ import java.io.IOException;
  *
  * @author lry
  */
-public class RedisClientFactoryAdapter {
+public class RedisTransporterFactoryAdapter {
 
     @SuppressWarnings("rawtypes")
-	private RedisClientFactory redisClientFactory;
+	private RedisTransporterFactory redisTransporterFactory;
 
     private RedisPoolConfig poolConfig;
     private RedisPolicy policy = RedisPolicy.single; // 缓存策略，single:单机,sharded:分片,cluster:集群
 
-    public RedisClientFactoryAdapter(RedisPoolConfig poolConfig, RedisPolicy policy) {
+    public RedisTransporterFactoryAdapter(RedisPoolConfig poolConfig, RedisPolicy policy) {
         this.policy = policy;
         this.poolConfig = poolConfig;
         initRedisFactory();
@@ -39,24 +39,24 @@ public class RedisClientFactoryAdapter {
     }
 
     private void initSingleRedis() {
-        RedisSingleFactory redisSingleFactory = new RedisSingleFactory();
-        redisSingleFactory.setPoolConfig(this.poolConfig);
-        redisSingleFactory.build();
-        this.setRedisClientFactory(redisSingleFactory);
+        SingleRedisTransporterFactory singleRedisTransporterFactory = new SingleRedisTransporterFactory();
+        singleRedisTransporterFactory.setPoolConfig(this.poolConfig);
+        singleRedisTransporterFactory.build();
+        this.setRedisClientFactory(singleRedisTransporterFactory);
     }
 
     private void initShardedRedis() {
-        RedisShardedFactory redisShardedFactory = new RedisShardedFactory();
-        redisShardedFactory.setPoolConfig(this.poolConfig);
-        redisShardedFactory.build();
-        this.setRedisClientFactory(redisShardedFactory);
+        ShardedRedisTransporterFactory shardedRedisTransporterFactory = new ShardedRedisTransporterFactory();
+        shardedRedisTransporterFactory.setPoolConfig(this.poolConfig);
+        shardedRedisTransporterFactory.build();
+        this.setRedisClientFactory(shardedRedisTransporterFactory);
     }
 
     private void initClusterRedis() {
-        RedisClusterFactory redisClusterFactory = new RedisClusterFactory();
-        redisClusterFactory.setPoolConfig(this.poolConfig);
-        redisClusterFactory.build();
-        this.setRedisClientFactory(redisClusterFactory);
+        ClusterRedisTransporterFactory clusterRedisTransporterFactory = new ClusterRedisTransporterFactory();
+        clusterRedisTransporterFactory.setPoolConfig(this.poolConfig);
+        clusterRedisTransporterFactory.build();
+        this.setRedisClientFactory(clusterRedisTransporterFactory);
     }
 
     public void setHost(String host) {
@@ -236,13 +236,13 @@ public class RedisClientFactoryAdapter {
     }
 
     @SuppressWarnings("rawtypes")
-	public void setRedisClientFactory(RedisClientFactory redisClientFactory) {
-        this.redisClientFactory = redisClientFactory;
+	public void setRedisClientFactory(RedisTransporterFactory redisTransporterFactory) {
+        this.redisTransporterFactory = redisTransporterFactory;
     }
 
 	@SuppressWarnings("unchecked")
-	public RedisClientFactory<RedisClient> getRedisClientFactory() {
-        return redisClientFactory;
+	public RedisTransporterFactory<RedisTransporter> getRedisClientFactory() {
+        return redisTransporterFactory;
     }
 
     public void close() {

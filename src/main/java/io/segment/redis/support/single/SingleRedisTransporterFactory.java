@@ -1,7 +1,7 @@
 package io.segment.redis.support.single;
 
 import io.neural.extension.Extension;
-import io.segment.redis.support.RedisClientFactory;
+import io.segment.redis.support.RedisTransporterFactory;
 import io.segment.redis.support.RedisPoolConfig;
 
 import java.io.IOException;
@@ -14,7 +14,7 @@ import redis.clients.jedis.JedisPool;
  * @author lry
  */
 @Extension("single")
-public class RedisSingleFactory implements RedisClientFactory<SingleRedisClient> {
+public class SingleRedisTransporterFactory implements RedisTransporterFactory<SingleRedisTransporter> {
 
     private static JedisPool jedisPool;
     private RedisPoolConfig poolConfig;
@@ -24,12 +24,12 @@ public class RedisSingleFactory implements RedisClientFactory<SingleRedisClient>
     }
 
     @Override
-    public SingleRedisClient getResource() {
-        return new SingleRedisClient(getJedisPool().getResource());
+    public SingleRedisTransporter getResource() {
+        return new SingleRedisTransporter(getJedisPool().getResource());
     }
 
     @Override
-    public void returnResource(SingleRedisClient client) {
+    public void returnResource(SingleRedisTransporter client) {
         if (client != null)
             client.close();
     }

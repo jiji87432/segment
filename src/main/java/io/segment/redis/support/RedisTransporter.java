@@ -29,7 +29,7 @@ import redis.clients.jedis.params.sortedset.ZIncrByParams;
  *
  * @author lry
  */
-public interface RedisClient extends JedisCommands, BasicCommands, Closeable {
+public interface RedisTransporter extends JedisCommands, BasicCommands, Closeable {
 
 	Object getClient();
 	

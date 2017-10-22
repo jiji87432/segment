@@ -1,7 +1,7 @@
 package io.segment.redis;
 
-import io.segment.redis.support.RedisClient;
-import io.segment.redis.support.RedisClientFactoryAdapter;
+import io.segment.redis.support.RedisTransporter;
+import io.segment.redis.support.RedisTransporterFactoryAdapter;
 
 import java.io.Closeable;
 import java.util.Set;
@@ -15,125 +15,125 @@ import redis.clients.jedis.BinaryJedisPubSub;
  */
 public class RedisCacheProxy implements Closeable {
 
-    private RedisClientFactoryAdapter redisClientFactoryAdapter;
+    private RedisTransporterFactoryAdapter redisTransporterFactoryAdapter;
 
-    public RedisCacheProxy(RedisClientFactoryAdapter redisClientFactoryAdapter) {
-        this.redisClientFactoryAdapter = redisClientFactoryAdapter;
-        if (this.redisClientFactoryAdapter == null) {
+    public RedisCacheProxy(RedisTransporterFactoryAdapter redisTransporterFactoryAdapter) {
+        this.redisTransporterFactoryAdapter = redisTransporterFactoryAdapter;
+        if (this.redisTransporterFactoryAdapter == null) {
             throw new RuntimeException("jedis handler adapter must configuration");
         }
     }
 
-    public RedisClient getResource() {
-        return this.redisClientFactoryAdapter.getRedisClientFactory().getResource();
+    public RedisTransporter getResource() {
+        return this.redisTransporterFactoryAdapter.getRedisClientFactory().getResource();
     }
 
-	public void returnResource(RedisClient redisClient) {
-        this.redisClientFactoryAdapter.getRedisClientFactory().returnResource(redisClient);
+	public void returnResource(RedisTransporter redisTransporter) {
+        this.redisTransporterFactoryAdapter.getRedisClientFactory().returnResource(redisTransporter);
     }
 
     public byte[] hget(byte[] key, byte[] fieldKey) {
-        RedisClient redisClient = null;
+        RedisTransporter redisTransporter = null;
         try {
-            redisClient = getResource();
-            return redisClient.hget(key, fieldKey);
+            redisTransporter = getResource();
+            return redisTransporter.hget(key, fieldKey);
         } finally {
-            returnResource(redisClient);
+            returnResource(redisTransporter);
         }
     }
 
     public void hset(byte[] key, byte[] fieldKey, byte[] val) {
-        RedisClient redisClient = null;
+        RedisTransporter redisTransporter = null;
         try {
-            redisClient = getResource();
-            redisClient.hset(key, fieldKey, val);
+            redisTransporter = getResource();
+            redisTransporter.hset(key, fieldKey, val);
         } finally {
-            returnResource(redisClient);
+            returnResource(redisTransporter);
         }
     }
     
     public void hset(byte[] key, byte[] fieldKey, byte[] val, int expireInSec) {
-        RedisClient redisClient = null;
+        RedisTransporter redisTransporter = null;
         try {
-            redisClient = getResource();
-            redisClient.hset(key, fieldKey, val);
-            redisClient.expire(key, expireInSec);
+            redisTransporter = getResource();
+            redisTransporter.hset(key, fieldKey, val);
+            redisTransporter.expire(key, expireInSec);
         } finally {
-            returnResource(redisClient);
+            returnResource(redisTransporter);
         }
     }
 
     public void hdel(byte[] key, byte[]... fieldKey) {
-        RedisClient redisClient = null;
+        RedisTransporter redisTransporter = null;
         try {
-            redisClient = getResource();
-            redisClient.hdel(key, fieldKey);
+            redisTransporter = getResource();
+            redisTransporter.hdel(key, fieldKey);
         } finally {
-            returnResource(redisClient);
+            returnResource(redisTransporter);
         }
     }
 
     public Set<String> hkeys(String key) {
-        RedisClient redisClient = null;
+        RedisTransporter redisTransporter = null;
         try {
-            redisClient = getResource();
-            return redisClient.hkeys(key);
+            redisTransporter = getResource();
+            return redisTransporter.hkeys(key);
         } finally {
-            returnResource(redisClient);
+            returnResource(redisTransporter);
         }
     }
 
     public Set<byte[]> hkeys(byte[] key) {
-        RedisClient redisClient = null;
+        RedisTransporter redisTransporter = null;
         try {
-            redisClient = getResource();
-            return redisClient.hkeys(key);
+            redisTransporter = getResource();
+            return redisTransporter.hkeys(key);
         } finally {
-            returnResource(redisClient);
+            returnResource(redisTransporter);
         }
     }
 
     public void del(String key) {
-        RedisClient redisClient = null;
+        RedisTransporter redisTransporter = null;
         try {
-            redisClient = getResource();
-            redisClient.del(key);
+            redisTransporter = getResource();
+            redisTransporter.del(key);
         } finally {
-            returnResource(redisClient);
+            returnResource(redisTransporter);
         }
     }
 
     public void del(byte[] key) {
-        RedisClient redisClient = null;
+        RedisTransporter redisTransporter = null;
         try {
-            redisClient = getResource();
-            redisClient.del(key);
+            redisTransporter = getResource();
+            redisTransporter.del(key);
         } finally {
-            returnResource(redisClient);
+            returnResource(redisTransporter);
         }
     }
 
     public void subscribe(BinaryJedisPubSub binaryJedisPubSub, byte[]... channels) {
-        RedisClient redisClient = null;
+        RedisTransporter redisTransporter = null;
         try {
-            redisClient = getResource();
-            redisClient.subscribe(binaryJedisPubSub, channels);
+            redisTransporter = getResource();
+            redisTransporter.subscribe(binaryJedisPubSub, channels);
         } finally {
-            returnResource(redisClient);
+            returnResource(redisTransporter);
         }
     }
 
     public void publish(byte[] channel, byte[] message) {
-        RedisClient redisClient = null;
+        RedisTransporter redisTransporter = null;
         try {
-            redisClient = getResource();
-            redisClient.publish(channel, message);
+            redisTransporter = getResource();
+            redisTransporter.publish(channel, message);
         } finally {
-            returnResource(redisClient);
+            returnResource(redisTransporter);
         }
     }
 
     public void close() {
-        redisClientFactoryAdapter.close();
+        redisTransporterFactoryAdapter.close();
     }
 }
