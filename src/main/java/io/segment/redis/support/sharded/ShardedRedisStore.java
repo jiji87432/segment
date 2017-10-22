@@ -1,7 +1,7 @@
 package io.segment.redis.support.sharded;
 
 import io.neural.extension.Extension;
-import io.segment.redis.support.RedisStoreFactory;
+import io.segment.redis.support.RedisStore;
 import io.segment.redis.support.RedisPoolConfig;
 
 import java.io.IOException;
@@ -13,7 +13,7 @@ import redis.clients.jedis.JedisShardInfo;
 import redis.clients.jedis.ShardedJedisPool;
 
 @Extension("sharded")
-public class ShardedRedisStoreFactory implements RedisStoreFactory<ShardedRedisService> {
+public class ShardedRedisStore implements RedisStore<ShardedRedisService> {
 
     private static ShardedJedisPool jedisPool;
     private RedisPoolConfig poolConfig;

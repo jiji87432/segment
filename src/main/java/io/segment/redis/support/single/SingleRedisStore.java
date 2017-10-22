@@ -1,7 +1,7 @@
 package io.segment.redis.support.single;
 
 import io.neural.extension.Extension;
-import io.segment.redis.support.RedisStoreFactory;
+import io.segment.redis.support.RedisStore;
 import io.segment.redis.support.RedisPoolConfig;
 
 import java.io.IOException;
@@ -14,7 +14,7 @@ import redis.clients.jedis.JedisPool;
  * @author lry
  */
 @Extension("single")
-public class SingleRedisStoreFactory implements RedisStoreFactory<SingleRedisService> {
+public class SingleRedisStore implements RedisStore<SingleRedisService> {
 
     private static JedisPool jedisPool;
     private RedisPoolConfig poolConfig;
