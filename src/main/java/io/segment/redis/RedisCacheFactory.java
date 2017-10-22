@@ -2,7 +2,7 @@ package io.segment.redis;
 
 import io.neural.extension.Extension;
 import io.segment.Cache;
-import io.segment.CacheProvider;
+import io.segment.CacheFactory;
 import io.segment.Segment;
 import io.segment.redis.support.RedisClientFactoryAdapter;
 import io.segment.redis.support.RedisPoolConfig;
@@ -18,7 +18,7 @@ import java.util.concurrent.ConcurrentHashMap;
  * @author lry
  */
 @Extension("redis")
-public class RedisCacheProvider implements CacheProvider {
+public class RedisCacheFactory implements CacheFactory {
 
     private static RedisCacheProxy redisCacheProxy;
 

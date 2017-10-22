@@ -1,7 +1,7 @@
 package io.segment.ehcache;
 
 import io.neural.extension.Extension;
-import io.segment.CacheProvider;
+import io.segment.CacheFactory;
 import io.segment.support.CacheException;
 import io.segment.support.CacheExpiredListener;
 
@@ -21,9 +21,9 @@ import org.slf4j.LoggerFactory;
  * @author lry
  */
 @Extension("eh")
-public class EhCacheProvider implements CacheProvider {
+public class EhCacheFactory implements CacheFactory {
 
-	private final static Logger log = LoggerFactory.getLogger(EhCacheProvider.class);
+	private final static Logger log = LoggerFactory.getLogger(EhCacheFactory.class);
 	public static String KEY_EHCACHE_NAME = "ehcache.name";
 	public static String KEY_EHCACHE_CONFIG_XML = "ehcache.configXml";
 

@@ -12,7 +12,7 @@ import java.util.Properties;
  * @author lry
  */
 @NPI
-public interface CacheProvider {
+public interface CacheFactory {
 
 	/**
 	 * Cache ID name

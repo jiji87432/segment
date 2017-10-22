@@ -1,10 +1,10 @@
 package io.segment.support;
 
 import io.segment.Cache;
-import io.segment.CacheProvider;
+import io.segment.CacheFactory;
 import io.segment.Segment;
-import io.segment.ehcache.EhCacheProvider;
-import io.segment.redis.RedisCacheProvider;
+import io.segment.ehcache.EhCacheFactory;
+import io.segment.redis.RedisCacheFactory;
 
 import java.util.Enumeration;
 import java.util.List;
@@ -22,8 +22,8 @@ public class CacheManager {
 
 	private final static Logger log = LoggerFactory.getLogger(CacheManager.class);
 
-	private static CacheProvider l1_provider;
-	private static CacheProvider l2_provider;
+	private static CacheFactory l1_provider;
+	private static CacheFactory l2_provider;
 	
 	private static CacheExpiredListener listener;
 	
@@ -55,17 +55,17 @@ public class CacheManager {
 		return serializer;
 	}
 	
-	private final static CacheProvider getProviderInstance(String value) throws Exception {
+	private final static CacheFactory getProviderInstance(String value) throws Exception {
 		if ("ehcache".equalsIgnoreCase(value)) {
-			return new EhCacheProvider();
+			return new EhCacheFactory();
 		} else if("redis".equalsIgnoreCase(value)) {
-			return new RedisCacheProvider();
+			return new RedisCacheFactory();
 		} else {
-			return (CacheProvider)Class.forName(value).newInstance();
+			return (CacheFactory)Class.forName(value).newInstance();
 		}
 	}
 	
-	private final static Properties getProviderProperties(Properties props, CacheProvider provider) {
+	private final static Properties getProviderProperties(Properties props, CacheFactory provider) {
 		Properties new_props = new Properties();
 		Enumeration<Object> keys = props.keys();
 		String prefix = provider.name() + '.';

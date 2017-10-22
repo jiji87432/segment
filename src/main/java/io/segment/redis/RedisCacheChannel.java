@@ -53,7 +53,7 @@ public class RedisCacheChannel extends BinaryJedisPubSub implements CacheExpired
         try {
             long ct = System.currentTimeMillis();
             CacheManager.initCacheProvider(this);
-            redisCacheProxy = new RedisCacheProvider().getResource();
+            redisCacheProxy = new RedisCacheFactory().getResource();
             thread_subscribe = new Thread(new Runnable() {
                 @Override
                 public void run() {
