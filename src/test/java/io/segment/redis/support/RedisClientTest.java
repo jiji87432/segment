@@ -1,9 +1,5 @@
 package io.segment.redis.support;
 
-import io.segment.redis.support.RedisClient;
-import io.segment.redis.support.RedisClientFactory;
-import io.segment.redis.support.RedisClientFactoryAdapter;
-import io.segment.redis.support.RedisPoolConfig;
 import io.segment.redis.support.RedisClientFactoryAdapter.RedisPolicy;
 
 public class RedisClientTest {

@@ -3,8 +3,8 @@ package io.segment.redis;
 import io.neural.extension.Extension;
 import io.segment.Cache;
 import io.segment.Segment;
+import io.segment.serializer.SerializationUtils;
 import io.segment.support.CacheException;
-import io.segment.support.util.SerializationUtils;
 
 import java.io.IOException;
 import java.util.ArrayList;

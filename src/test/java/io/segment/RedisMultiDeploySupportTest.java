@@ -1,6 +1,5 @@
 package io.segment;
 
-import io.segment.Segment;
 import io.segment.support.CacheObject;
 
 import java.util.HashMap;

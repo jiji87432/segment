@@ -1,9 +1,7 @@
-package io.segment.support.util;
+package io.segment.serializer;
 
 import io.neural.extension.ExtensionLoader;
 import io.segment.support.CacheManager;
-import io.segment.support.serializer.JavaSerializer;
-import io.segment.support.serializer.Serializer;
 
 import java.io.IOException;
 

@@ -1,7 +1,7 @@
 package io.segment;
 
+import io.segment.serializer.SerializationUtils;
 import io.segment.support.CacheManager;
-import io.segment.support.util.SerializationUtils;
 
 import java.io.IOException;
 import java.util.ArrayList;

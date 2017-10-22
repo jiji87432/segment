@@ -1,6 +1,6 @@
 package io.segment.support;
 
-import io.segment.support.util.SerializationUtils;
+import io.segment.serializer.SerializationUtils;
 
 import java.io.IOException;
 import java.util.Arrays;

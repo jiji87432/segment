@@ -1,4 +1,4 @@
-package io.segment.support.serializer;
+package io.segment.serializer;
 
 import io.neural.extension.Extension;
 import io.segment.support.CacheException;

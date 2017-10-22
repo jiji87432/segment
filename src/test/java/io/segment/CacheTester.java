@@ -1,7 +1,5 @@
 package io.segment;
 
-import io.segment.CacheChannel;
-import io.segment.Segment;
 import io.segment.support.CacheObject;
 
 import java.io.BufferedReader;
