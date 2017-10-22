@@ -1,6 +1,6 @@
 package io.segment.redis.support.sharded;
 
-import io.segment.redis.support.RedisStore;
+import io.segment.redis.support.RedisService;
 
 import java.util.Collection;
 import java.util.List;
@@ -30,11 +30,11 @@ import redis.clients.jedis.params.sortedset.ZAddParams;
 import redis.clients.jedis.params.sortedset.ZIncrByParams;
 import redis.clients.util.Pool;
 
-public class ShardedRedisStore implements RedisStore {
+public class ShardedRedisService implements RedisService {
 
     private ShardedJedis jedis;
 
-    public ShardedRedisStore(ShardedJedis jedis) {
+    public ShardedRedisService(ShardedJedis jedis) {
         this.jedis = jedis;
     }
 

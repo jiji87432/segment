@@ -13,7 +13,7 @@ import redis.clients.jedis.JedisShardInfo;
 import redis.clients.jedis.ShardedJedisPool;
 
 @Extension("sharded")
-public class ShardedRedisStoreFactory implements RedisStoreFactory<ShardedRedisStore> {
+public class ShardedRedisStoreFactory implements RedisStoreFactory<ShardedRedisService> {
 
     private static ShardedJedisPool jedisPool;
     private RedisPoolConfig poolConfig;
@@ -25,12 +25,12 @@ public class ShardedRedisStoreFactory implements RedisStoreFactory<ShardedRedisS
     }
 
     @Override
-    public ShardedRedisStore getResource() {
-        return new ShardedRedisStore(getJedisPool().getResource());
+    public ShardedRedisService getResource() {
+        return new ShardedRedisService(getJedisPool().getResource());
     }
 
     @Override
-    public void returnResource(ShardedRedisStore client) {
+    public void returnResource(ShardedRedisService client) {
         if (client != null)
             client.close();
     }

@@ -10,10 +10,10 @@ public class RedisClientTest {
 		poolConfig.setPort(6379);
 		RedisPolicy policy = RedisPolicy.single;
 		RedisStoreFactoryAdapter redisStoreFactoryAdapter = new RedisStoreFactoryAdapter(poolConfig, policy);
-		RedisStoreFactory<RedisStore> redisClientFactory = redisStoreFactoryAdapter.getRedisClientFactory();
-		RedisStore redisStore = redisClientFactory.getResource();
-		redisStore.set("key1", System.currentTimeMillis()+"");
-		System.out.println(redisStore.get("key1"));
+		RedisStoreFactory<RedisService> redisClientFactory = redisStoreFactoryAdapter.getRedisClientFactory();
+		RedisService redisService = redisClientFactory.getResource();
+		redisService.set("key1", System.currentTimeMillis()+"");
+		System.out.println(redisService.get("key1"));
 	}
 	
 }

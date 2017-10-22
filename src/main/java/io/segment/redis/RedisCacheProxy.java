@@ -1,6 +1,6 @@
 package io.segment.redis;
 
-import io.segment.redis.support.RedisStore;
+import io.segment.redis.support.RedisService;
 import io.segment.redis.support.RedisStoreFactoryAdapter;
 
 import java.io.Closeable;
@@ -24,112 +24,112 @@ public class RedisCacheProxy implements Closeable {
         }
     }
 
-    public RedisStore getResource() {
+    public RedisService getResource() {
         return this.redisStoreFactoryAdapter.getRedisClientFactory().getResource();
     }
 
-	public void returnResource(RedisStore redisStore) {
-        this.redisStoreFactoryAdapter.getRedisClientFactory().returnResource(redisStore);
+	public void returnResource(RedisService redisService) {
+        this.redisStoreFactoryAdapter.getRedisClientFactory().returnResource(redisService);
     }
 
     public byte[] hget(byte[] key, byte[] fieldKey) {
-        RedisStore redisStore = null;
+        RedisService redisService = null;
         try {
-            redisStore = getResource();
-            return redisStore.hget(key, fieldKey);
+            redisService = getResource();
+            return redisService.hget(key, fieldKey);
         } finally {
-            returnResource(redisStore);
+            returnResource(redisService);
         }
     }
 
     public void hset(byte[] key, byte[] fieldKey, byte[] val) {
-        RedisStore redisStore = null;
+        RedisService redisService = null;
         try {
-            redisStore = getResource();
-            redisStore.hset(key, fieldKey, val);
+            redisService = getResource();
+            redisService.hset(key, fieldKey, val);
         } finally {
-            returnResource(redisStore);
+            returnResource(redisService);
         }
     }
     
     public void hset(byte[] key, byte[] fieldKey, byte[] val, int expireInSec) {
-        RedisStore redisStore = null;
+        RedisService redisService = null;
         try {
-            redisStore = getResource();
-            redisStore.hset(key, fieldKey, val);
-            redisStore.expire(key, expireInSec);
+            redisService = getResource();
+            redisService.hset(key, fieldKey, val);
+            redisService.expire(key, expireInSec);
         } finally {
-            returnResource(redisStore);
+            returnResource(redisService);
         }
     }
 
     public void hdel(byte[] key, byte[]... fieldKey) {
-        RedisStore redisStore = null;
+        RedisService redisService = null;
         try {
-            redisStore = getResource();
-            redisStore.hdel(key, fieldKey);
+            redisService = getResource();
+            redisService.hdel(key, fieldKey);
         } finally {
-            returnResource(redisStore);
+            returnResource(redisService);
         }
     }
 
     public Set<String> hkeys(String key) {
-        RedisStore redisStore = null;
+        RedisService redisService = null;
         try {
-            redisStore = getResource();
-            return redisStore.hkeys(key);
+            redisService = getResource();
+            return redisService.hkeys(key);
         } finally {
-            returnResource(redisStore);
+            returnResource(redisService);
         }
     }
 
     public Set<byte[]> hkeys(byte[] key) {
-        RedisStore redisStore = null;
+        RedisService redisService = null;
         try {
-            redisStore = getResource();
-            return redisStore.hkeys(key);
+            redisService = getResource();
+            return redisService.hkeys(key);
         } finally {
-            returnResource(redisStore);
+            returnResource(redisService);
         }
     }
 
     public void del(String key) {
-        RedisStore redisStore = null;
+        RedisService redisService = null;
         try {
-            redisStore = getResource();
-            redisStore.del(key);
+            redisService = getResource();
+            redisService.del(key);
         } finally {
-            returnResource(redisStore);
+            returnResource(redisService);
         }
     }
 
     public void del(byte[] key) {
-        RedisStore redisStore = null;
+        RedisService redisService = null;
         try {
-            redisStore = getResource();
-            redisStore.del(key);
+            redisService = getResource();
+            redisService.del(key);
         } finally {
-            returnResource(redisStore);
+            returnResource(redisService);
         }
     }
 
     public void subscribe(BinaryJedisPubSub binaryJedisPubSub, byte[]... channels) {
-        RedisStore redisStore = null;
+        RedisService redisService = null;
         try {
-            redisStore = getResource();
-            redisStore.subscribe(binaryJedisPubSub, channels);
+            redisService = getResource();
+            redisService.subscribe(binaryJedisPubSub, channels);
         } finally {
-            returnResource(redisStore);
+            returnResource(redisService);
         }
     }
 
     public void publish(byte[] channel, byte[] message) {
-        RedisStore redisStore = null;
+        RedisService redisService = null;
         try {
-            redisStore = getResource();
-            redisStore.publish(channel, message);
+            redisService = getResource();
+            redisService.publish(channel, message);
         } finally {
-            returnResource(redisStore);
+            returnResource(redisService);
         }
     }
 

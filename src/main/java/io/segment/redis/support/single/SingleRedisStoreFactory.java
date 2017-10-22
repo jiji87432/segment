@@ -14,7 +14,7 @@ import redis.clients.jedis.JedisPool;
  * @author lry
  */
 @Extension("single")
-public class SingleRedisStoreFactory implements RedisStoreFactory<SingleRedisStore> {
+public class SingleRedisStoreFactory implements RedisStoreFactory<SingleRedisService> {
 
     private static JedisPool jedisPool;
     private RedisPoolConfig poolConfig;
@@ -24,12 +24,12 @@ public class SingleRedisStoreFactory implements RedisStoreFactory<SingleRedisSto
     }
 
     @Override
-    public SingleRedisStore getResource() {
-        return new SingleRedisStore(getJedisPool().getResource());
+    public SingleRedisService getResource() {
+        return new SingleRedisService(getJedisPool().getResource());
     }
 
     @Override
-    public void returnResource(SingleRedisStore client) {
+    public void returnResource(SingleRedisService client) {
         if (client != null)
             client.close();
     }

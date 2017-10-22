@@ -18,9 +18,9 @@ import redis.clients.jedis.JedisCluster;
  * @author lry
  */
 @Extension("cluster")
-public class ClusterRedisStoreFactory implements RedisStoreFactory<ClusterRedisStore> {
+public class ClusterRedisStoreFactory implements RedisStoreFactory<ClusterRedisService> {
 
-    private static ClusterRedisStore redisClient;
+    private static ClusterRedisService redisClient;
     private RedisPoolConfig poolConfig;
 
     private int maxRedirections = 0;
@@ -28,7 +28,7 @@ public class ClusterRedisStoreFactory implements RedisStoreFactory<ClusterRedisS
     private Pattern p = Pattern.compile("^.+[:]\\d{1,5}\\s*$");
 
     @Override
-    public synchronized ClusterRedisStore getResource() {
+    public synchronized ClusterRedisService getResource() {
         return redisClient;
     }
 
@@ -39,7 +39,7 @@ public class ClusterRedisStoreFactory implements RedisStoreFactory<ClusterRedisS
      * @param client
      */
     @Override
-    public void returnResource(ClusterRedisStore client) {
+    public void returnResource(ClusterRedisService client) {
 
     }
 
@@ -64,7 +64,7 @@ public class ClusterRedisStoreFactory implements RedisStoreFactory<ClusterRedisS
             maxRedirections = hostAndPorts.size();
         }
 
-        redisClient = new ClusterRedisStore(
+        redisClient = new ClusterRedisService(
                 new JedisCluster(hostAndPorts, poolConfig.getTimeout(), maxRedirections, poolConfig));
     }
 

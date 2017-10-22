@@ -241,7 +241,7 @@ public class RedisStoreFactoryAdapter {
     }
 
 	@SuppressWarnings("unchecked")
-	public RedisStoreFactory<RedisStore> getRedisClientFactory() {
+	public RedisStoreFactory<RedisService> getRedisClientFactory() {
         return redisStoreFactory;
     }
 

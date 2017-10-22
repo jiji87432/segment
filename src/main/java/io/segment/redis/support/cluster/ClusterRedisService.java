@@ -1,6 +1,6 @@
 package io.segment.redis.support.cluster;
 
-import io.segment.redis.support.RedisStore;
+import io.segment.redis.support.RedisService;
 
 import java.io.IOException;
 import java.util.Collection;
@@ -33,11 +33,11 @@ import redis.clients.jedis.params.sortedset.ZIncrByParams;
  * 
  * @author lry
  */
-public class ClusterRedisStore implements RedisStore {
+public class ClusterRedisService implements RedisService {
 
     private JedisCluster jedis;
 
-    public ClusterRedisStore(JedisCluster jedis) {
+    public ClusterRedisService(JedisCluster jedis) {
         this.jedis = jedis;
     }
     
