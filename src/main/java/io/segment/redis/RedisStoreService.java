@@ -13,11 +13,11 @@ import redis.clients.jedis.BinaryJedisPubSub;
  *
  * @author lry
  */
-public class RedisCacheProxy implements Closeable {
+public class RedisStoreService implements Closeable {
 
     private RedisStoreFactory redisStoreFactory;
 
-    public RedisCacheProxy(RedisStoreFactory redisStoreFactory) {
+    public RedisStoreService(RedisStoreFactory redisStoreFactory) {
         this.redisStoreFactory = redisStoreFactory;
         if (this.redisStoreFactory == null) {
             throw new RuntimeException("jedis handler adapter must configuration");

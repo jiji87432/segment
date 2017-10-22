@@ -32,7 +32,7 @@ public class RedisSegmentChannel extends BinaryJedisPubSub implements CacheExpir
     private final static RedisSegmentChannel instance = new RedisSegmentChannel("default");
     private final Thread thread_subscribe;
 
-    private RedisCacheProxy redisCacheProxy;
+    private RedisStoreService redisStoreService;
 
     /**
      * 单例方法
@@ -53,11 +53,11 @@ public class RedisSegmentChannel extends BinaryJedisPubSub implements CacheExpir
         try {
             long ct = System.currentTimeMillis();
             CacheManager.initCacheProvider(this);
-            redisCacheProxy = new RedisCacheFactory().getResource();
+            redisStoreService = new RedisCacheFactory().getResource();
             thread_subscribe = new Thread(new Runnable() {
                 @Override
                 public void run() {
-                    redisCacheProxy.subscribe(RedisSegmentChannel.this, SafeEncoder.encode(channel));
+                    redisStoreService.subscribe(RedisSegmentChannel.this, SafeEncoder.encode(channel));
                 }
             });
 
@@ -220,7 +220,7 @@ public class RedisSegmentChannel extends BinaryJedisPubSub implements CacheExpir
         // 发送广播
         Command cmd = new Command(Command.OPT_DELETE_KEY, region, key);
         try {
-            redisCacheProxy.publish(SafeEncoder.encode(channel), cmd.toBuffers());
+            redisStoreService.publish(SafeEncoder.encode(channel), cmd.toBuffers());
         } catch (Exception e) {
             log.error("Unable to delete cache,region=" + region + ",key=" + key, e);
         }
@@ -235,7 +235,7 @@ public class RedisSegmentChannel extends BinaryJedisPubSub implements CacheExpir
         // 发送广播
         Command cmd = new Command(Command.OPT_CLEAR_KEY, region, "");
         try {
-            redisCacheProxy.publish(SafeEncoder.encode(channel), cmd.toBuffers());
+            redisStoreService.publish(SafeEncoder.encode(channel), cmd.toBuffers());
         } catch (Exception e) {
             log.error("Unable to clear cache,region=" + region, e);
         }

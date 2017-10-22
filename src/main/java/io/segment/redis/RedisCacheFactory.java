@@ -20,7 +20,7 @@ import java.util.concurrent.ConcurrentHashMap;
 @Extension("redis")
 public class RedisCacheFactory implements CacheFactory {
 
-    private static RedisCacheProxy redisCacheProxy;
+    private static RedisStoreService redisStoreService;
 
     protected ConcurrentHashMap<String, RedisCache> caches = new ConcurrentHashMap<>();
 
@@ -29,12 +29,12 @@ public class RedisCacheFactory implements CacheFactory {
     }
 
     // 这个实现有个问题,如果不使用RedisCacheProvider,但又使用RedisCacheChannel,这就NPE了
-    public RedisCacheProxy getResource() {
-        if (redisCacheProxy == null) {
+    public RedisStoreService getResource() {
+        if (redisStoreService == null) {
             this.start(Segment.getConfig());
         }
 
-        return redisCacheProxy;
+        return redisStoreService;
     }
 
     @Override
@@ -43,7 +43,7 @@ public class RedisCacheFactory implements CacheFactory {
         // 但返回的实例一次性使用,所以加锁了并没有增加收益
         RedisCache cache = caches.get(regionName);
         if (cache == null) {
-            cache = new RedisCache(regionName, redisCacheProxy);
+            cache = new RedisCache(regionName, redisStoreService);
             caches.put(regionName, cache);
         }
         return cache;
@@ -74,13 +74,13 @@ public class RedisCacheFactory implements CacheFactory {
         config.setDatabase(getProperty(props, "database", 0));
         
         String redisPolicy = getProperty(props, "policy", "single");
-        redisCacheProxy = new RedisCacheProxy(new RedisStoreFactory(config, RedisStoreFactory.RedisPolicy.valueOf(redisPolicy)));
+        redisStoreService = new RedisStoreService(new RedisStoreFactory(config, RedisStoreFactory.RedisPolicy.valueOf(redisPolicy)));
 
     }
 
     @Override
     public void stop() {
-        redisCacheProxy.close();
+        redisStoreService.close();
         caches.clear();
     }
 

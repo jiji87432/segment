@@ -26,15 +26,15 @@ public class RedisCache implements Cache {
     // 记录region
     protected byte[] region2;
     protected String region;
-    protected RedisCacheProxy redisCacheProxy;
+    protected RedisStoreService redisStoreService;
 
-    public RedisCache(String region, RedisCacheProxy redisCacheProxy) {
+    public RedisCache(String region, RedisStoreService redisStoreService) {
         if (region == null || region.isEmpty()) {
         	region = "_"; // 缺省region
         }
 
         region = getRegionName(region);
-        this.redisCacheProxy = redisCacheProxy;
+        this.redisStoreService = redisStoreService;
         this.region = region;
         this.region2 = region.getBytes();
     }
@@ -67,7 +67,7 @@ public class RedisCache implements Cache {
             return null;
         Object obj = null;
         try {
-            byte[] b = redisCacheProxy.hget(region2, getKeyName(key));
+            byte[] b = redisStoreService.hget(region2, getKeyName(key));
             if (b != null)
                 obj = SerializationUtils.deserialize(b);
         } catch (Exception e) {
@@ -85,7 +85,7 @@ public class RedisCache implements Cache {
             evict(key);
         else {
             try {
-                redisCacheProxy.hset(region2, getKeyName(key), SerializationUtils.serialize(value));
+                redisStoreService.hset(region2, getKeyName(key), SerializationUtils.serialize(value));
             } catch (Exception e) {
                 throw new CacheException(e);
             }
@@ -100,7 +100,7 @@ public class RedisCache implements Cache {
         if (key == null)
             return;
         try {
-            redisCacheProxy.hdel(region2, getKeyName(key));
+            redisStoreService.hdel(region2, getKeyName(key));
         } catch (Exception e) {
             throw new CacheException(e);
         }
@@ -116,7 +116,7 @@ public class RedisCache implements Cache {
             for (int i = 0; i < size; i++) {
                 okeys[i] = getKeyName(keys.get(i));
             }
-            redisCacheProxy.hdel(region2, okeys);
+            redisStoreService.hdel(region2, okeys);
         } catch (Exception e) {
             throw new CacheException(e);
         }
@@ -124,7 +124,7 @@ public class RedisCache implements Cache {
 
     public List<String> keys() throws CacheException {
         try {
-            return new ArrayList<String>(redisCacheProxy.hkeys(region));
+            return new ArrayList<String>(redisStoreService.hkeys(region));
         } catch (Exception e) {
             throw new CacheException(e);
         }
@@ -132,7 +132,7 @@ public class RedisCache implements Cache {
 
     public void clear() throws CacheException {
         try {
-            redisCacheProxy.del(region2);
+            redisStoreService.del(region2);
         } catch (Exception e) {
             throw new CacheException(e);
         }
@@ -150,7 +150,7 @@ public class RedisCache implements Cache {
             evict(key);
         else {
             try {
-                redisCacheProxy.hset(region2, getKeyName(key), SerializationUtils.serialize(value), expireInSec);
+                redisStoreService.hset(region2, getKeyName(key), SerializationUtils.serialize(value), expireInSec);
             } catch (Exception e) {
                 throw new CacheException(e);
             }
