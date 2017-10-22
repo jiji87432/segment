@@ -2,7 +2,7 @@ package io.segment.support;
 
 import io.segment.Cache;
 import io.segment.CacheProvider;
-import io.segment.DCache;
+import io.segment.Segment;
 import io.segment.ehcache.EhCacheProvider;
 import io.segment.redis.RedisCacheProvider;
 
@@ -36,7 +36,7 @@ public class CacheManager {
 	public static void initCacheProvider(CacheExpiredListener listener){
 		CacheManager.listener = listener;
 		try{
-			Properties props = DCache.getConfig();
+			Properties props = Segment.getConfig();
 			CacheManager.l1_provider = getProviderInstance(props.getProperty("cache.L1.provider_class"));
 			CacheManager.l1_provider.start(getProviderProperties(props, CacheManager.l1_provider));
 			log.info("Using L1 CacheProvider : " + l1_provider.getClass().getName());

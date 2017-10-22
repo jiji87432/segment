@@ -3,7 +3,7 @@ package io.segment.redis;
 import io.neural.extension.Extension;
 import io.segment.Cache;
 import io.segment.CacheProvider;
-import io.segment.DCache;
+import io.segment.Segment;
 import io.segment.redis.support.RedisClientFactoryAdapter;
 import io.segment.redis.support.RedisPoolConfig;
 import io.segment.support.CacheException;
@@ -31,7 +31,7 @@ public class RedisCacheProvider implements CacheProvider {
     // 这个实现有个问题,如果不使用RedisCacheProvider,但又使用RedisCacheChannel,这就NPE了
     public RedisCacheProxy getResource() {
         if (redisCacheProxy == null) {
-            this.start(DCache.getConfig());
+            this.start(Segment.getConfig());
         }
 
         return redisCacheProxy;

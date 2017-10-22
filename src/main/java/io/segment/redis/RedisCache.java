@@ -2,7 +2,7 @@ package io.segment.redis;
 
 import io.neural.extension.Extension;
 import io.segment.Cache;
-import io.segment.DCache;
+import io.segment.Segment;
 import io.segment.support.CacheException;
 import io.segment.support.util.SerializationUtils;
 
@@ -47,7 +47,7 @@ public class RedisCache implements Cache {
      * @return
      */
     private String getRegionName(String region) {
-        String nameSpace = DCache.getConfig().getProperty("redis.namespace", "");
+        String nameSpace = Segment.getConfig().getProperty("redis.namespace", "");
         if (nameSpace != null && !nameSpace.isEmpty()) {
             region = nameSpace + ":" + region;
         }

@@ -1,6 +1,6 @@
 package io.segment;
 
-import io.segment.DCache;
+import io.segment.Segment;
 import io.segment.support.CacheObject;
 
 import java.util.HashMap;
@@ -18,9 +18,9 @@ public class RedisMultiDeploySupportTest {
             put("git_link", "http://git.oschina.net/git-zyw");
         }};
 
-        DCache.getChannel().set("user_cache", "user", objectMap);
+        Segment.getChannel().set("user_cache", "user", objectMap);
 
-        CacheObject object = DCache.getChannel().get("user_cache", "user");
+        CacheObject object = Segment.getChannel().get("user_cache", "user");
         @SuppressWarnings("rawtypes")
 		Map map = (Map) object.getValue();
         System.out.println(map.get("git_link"));

@@ -2,7 +2,7 @@ package io.segment.redis;
 
 import io.neural.extension.Extension;
 import io.segment.CacheChannel;
-import io.segment.DCache;
+import io.segment.Segment;
 import io.segment.support.CacheException;
 import io.segment.support.CacheExpiredListener;
 import io.segment.support.CacheManager;
@@ -28,7 +28,7 @@ public class RedisCacheChannel extends BinaryJedisPubSub implements CacheExpired
     private final static Logger log = LoggerFactory.getLogger(RedisCacheChannel.class);
 
     private String name;
-    private static String channel = DCache.getConfig().getProperty("redis.channel_name");
+    private static String channel = Segment.getConfig().getProperty("redis.channel_name");
     private final static RedisCacheChannel instance = new RedisCacheChannel("default");
     private final Thread thread_subscribe;
 

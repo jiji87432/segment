@@ -1,7 +1,7 @@
 package io.segment;
 
 import io.segment.CacheChannel;
-import io.segment.DCache;
+import io.segment.Segment;
 import io.segment.support.CacheObject;
 
 import java.io.BufferedReader;
@@ -18,7 +18,7 @@ public class CacheTester {
 		
 		System.setProperty("java.net.preferIPv4Stack", "true"); //Disable IPv6 in JVM
 		
-		CacheChannel cache = DCache.getChannel();
+		CacheChannel cache = Segment.getChannel();
 		BufferedReader in=new BufferedReader(new InputStreamReader(System.in));
 
 	    do{

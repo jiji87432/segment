@@ -17,9 +17,9 @@ import org.slf4j.LoggerFactory;
  * 
  * @author lry
  */
-public class DCache {
+public class Segment {
 
-	private final static Logger log = LoggerFactory.getLogger(DCache.class);
+	private final static Logger log = LoggerFactory.getLogger(Segment.class);
 
 	private final static String CONFIG_FILE = "/segment.properties";
 	private final static CacheChannel channel;
@@ -51,7 +51,7 @@ public class DCache {
 
 	private static Properties loadConfig() throws IOException {
 		log.info("Load J2Cache Config File : [{}].", CONFIG_FILE);
-		InputStream configStream = DCache.class.getClassLoader().getParent().getResourceAsStream(CONFIG_FILE);
+		InputStream configStream = Segment.class.getClassLoader().getParent().getResourceAsStream(CONFIG_FILE);
 		if(configStream == null) {
 			configStream = CacheManager.class.getResourceAsStream(CONFIG_FILE);
 		}
