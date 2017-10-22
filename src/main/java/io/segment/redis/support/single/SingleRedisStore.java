@@ -1,6 +1,6 @@
 package io.segment.redis.support.single;
 
-import io.segment.redis.support.RedisTransporter;
+import io.segment.redis.support.RedisStore;
 
 import java.util.List;
 import java.util.Map;
@@ -34,11 +34,11 @@ import redis.clients.util.Pool;
 import redis.clients.util.Slowlog;
 
 @SuppressWarnings("deprecation")
-public class SingleRedisTransporter implements RedisTransporter{
+public class SingleRedisStore implements RedisStore{
 
     private Jedis jedis;
 
-    public SingleRedisTransporter(Jedis jedis) {
+    public SingleRedisStore(Jedis jedis) {
         this.jedis = jedis;
     }
     

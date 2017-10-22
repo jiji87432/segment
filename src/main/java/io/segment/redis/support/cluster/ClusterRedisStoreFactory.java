@@ -1,7 +1,7 @@
 package io.segment.redis.support.cluster;
 
 import io.neural.extension.Extension;
-import io.segment.redis.support.RedisTransporterFactory;
+import io.segment.redis.support.RedisStoreFactory;
 import io.segment.redis.support.RedisPoolConfig;
 
 import java.io.IOException;
@@ -18,9 +18,9 @@ import redis.clients.jedis.JedisCluster;
  * @author lry
  */
 @Extension("cluster")
-public class ClusterRedisTransporterFactory implements RedisTransporterFactory<ClusterRedisTransporter> {
+public class ClusterRedisStoreFactory implements RedisStoreFactory<ClusterRedisStore> {
 
-    private static ClusterRedisTransporter redisClient;
+    private static ClusterRedisStore redisClient;
     private RedisPoolConfig poolConfig;
 
     private int maxRedirections = 0;
@@ -28,7 +28,7 @@ public class ClusterRedisTransporterFactory implements RedisTransporterFactory<C
     private Pattern p = Pattern.compile("^.+[:]\\d{1,5}\\s*$");
 
     @Override
-    public synchronized ClusterRedisTransporter getResource() {
+    public synchronized ClusterRedisStore getResource() {
         return redisClient;
     }
 
@@ -39,7 +39,7 @@ public class ClusterRedisTransporterFactory implements RedisTransporterFactory<C
      * @param client
      */
     @Override
-    public void returnResource(ClusterRedisTransporter client) {
+    public void returnResource(ClusterRedisStore client) {
 
     }
 
@@ -64,7 +64,7 @@ public class ClusterRedisTransporterFactory implements RedisTransporterFactory<C
             maxRedirections = hostAndPorts.size();
         }
 
-        redisClient = new ClusterRedisTransporter(
+        redisClient = new ClusterRedisStore(
                 new JedisCluster(hostAndPorts, poolConfig.getTimeout(), maxRedirections, poolConfig));
     }
 

@@ -1,7 +1,7 @@
 package io.segment.redis;
 
-import io.segment.redis.support.RedisTransporter;
-import io.segment.redis.support.RedisTransporterFactoryAdapter;
+import io.segment.redis.support.RedisStore;
+import io.segment.redis.support.RedisStoreFactoryAdapter;
 
 import java.io.Closeable;
 import java.util.Set;
@@ -15,125 +15,125 @@ import redis.clients.jedis.BinaryJedisPubSub;
  */
 public class RedisCacheProxy implements Closeable {
 
-    private RedisTransporterFactoryAdapter redisTransporterFactoryAdapter;
+    private RedisStoreFactoryAdapter redisStoreFactoryAdapter;
 
-    public RedisCacheProxy(RedisTransporterFactoryAdapter redisTransporterFactoryAdapter) {
-        this.redisTransporterFactoryAdapter = redisTransporterFactoryAdapter;
-        if (this.redisTransporterFactoryAdapter == null) {
+    public RedisCacheProxy(RedisStoreFactoryAdapter redisStoreFactoryAdapter) {
+        this.redisStoreFactoryAdapter = redisStoreFactoryAdapter;
+        if (this.redisStoreFactoryAdapter == null) {
             throw new RuntimeException("jedis handler adapter must configuration");
         }
     }
 
-    public RedisTransporter getResource() {
-        return this.redisTransporterFactoryAdapter.getRedisClientFactory().getResource();
+    public RedisStore getResource() {
+        return this.redisStoreFactoryAdapter.getRedisClientFactory().getResource();
     }
 
-	public void returnResource(RedisTransporter redisTransporter) {
-        this.redisTransporterFactoryAdapter.getRedisClientFactory().returnResource(redisTransporter);
+	public void returnResource(RedisStore redisStore) {
+        this.redisStoreFactoryAdapter.getRedisClientFactory().returnResource(redisStore);
     }
 
     public byte[] hget(byte[] key, byte[] fieldKey) {
-        RedisTransporter redisTransporter = null;
+        RedisStore redisStore = null;
         try {
-            redisTransporter = getResource();
-            return redisTransporter.hget(key, fieldKey);
+            redisStore = getResource();
+            return redisStore.hget(key, fieldKey);
         } finally {
-            returnResource(redisTransporter);
+            returnResource(redisStore);
         }
     }
 
     public void hset(byte[] key, byte[] fieldKey, byte[] val) {
-        RedisTransporter redisTransporter = null;
+        RedisStore redisStore = null;
         try {
-            redisTransporter = getResource();
-            redisTransporter.hset(key, fieldKey, val);
+            redisStore = getResource();
+            redisStore.hset(key, fieldKey, val);
         } finally {
-            returnResource(redisTransporter);
+            returnResource(redisStore);
         }
     }
     
     public void hset(byte[] key, byte[] fieldKey, byte[] val, int expireInSec) {
-        RedisTransporter redisTransporter = null;
+        RedisStore redisStore = null;
         try {
-            redisTransporter = getResource();
-            redisTransporter.hset(key, fieldKey, val);
-            redisTransporter.expire(key, expireInSec);
+            redisStore = getResource();
+            redisStore.hset(key, fieldKey, val);
+            redisStore.expire(key, expireInSec);
         } finally {
-            returnResource(redisTransporter);
+            returnResource(redisStore);
         }
     }
 
     public void hdel(byte[] key, byte[]... fieldKey) {
-        RedisTransporter redisTransporter = null;
+        RedisStore redisStore = null;
         try {
-            redisTransporter = getResource();
-            redisTransporter.hdel(key, fieldKey);
+            redisStore = getResource();
+            redisStore.hdel(key, fieldKey);
         } finally {
-            returnResource(redisTransporter);
+            returnResource(redisStore);
         }
     }
 
     public Set<String> hkeys(String key) {
-        RedisTransporter redisTransporter = null;
+        RedisStore redisStore = null;
         try {
-            redisTransporter = getResource();
-            return redisTransporter.hkeys(key);
+            redisStore = getResource();
+            return redisStore.hkeys(key);
         } finally {
-            returnResource(redisTransporter);
+            returnResource(redisStore);
         }
     }
 
     public Set<byte[]> hkeys(byte[] key) {
-        RedisTransporter redisTransporter = null;
+        RedisStore redisStore = null;
         try {
-            redisTransporter = getResource();
-            return redisTransporter.hkeys(key);
+            redisStore = getResource();
+            return redisStore.hkeys(key);
         } finally {
-            returnResource(redisTransporter);
+            returnResource(redisStore);
         }
     }
 
     public void del(String key) {
-        RedisTransporter redisTransporter = null;
+        RedisStore redisStore = null;
         try {
-            redisTransporter = getResource();
-            redisTransporter.del(key);
+            redisStore = getResource();
+            redisStore.del(key);
         } finally {
-            returnResource(redisTransporter);
+            returnResource(redisStore);
         }
     }
 
     public void del(byte[] key) {
-        RedisTransporter redisTransporter = null;
+        RedisStore redisStore = null;
         try {
-            redisTransporter = getResource();
-            redisTransporter.del(key);
+            redisStore = getResource();
+            redisStore.del(key);
         } finally {
-            returnResource(redisTransporter);
+            returnResource(redisStore);
         }
     }
 
     public void subscribe(BinaryJedisPubSub binaryJedisPubSub, byte[]... channels) {
-        RedisTransporter redisTransporter = null;
+        RedisStore redisStore = null;
         try {
-            redisTransporter = getResource();
-            redisTransporter.subscribe(binaryJedisPubSub, channels);
+            redisStore = getResource();
+            redisStore.subscribe(binaryJedisPubSub, channels);
         } finally {
-            returnResource(redisTransporter);
+            returnResource(redisStore);
         }
     }
 
     public void publish(byte[] channel, byte[] message) {
-        RedisTransporter redisTransporter = null;
+        RedisStore redisStore = null;
         try {
-            redisTransporter = getResource();
-            redisTransporter.publish(channel, message);
+            redisStore = getResource();
+            redisStore.publish(channel, message);
         } finally {
-            returnResource(redisTransporter);
+            returnResource(redisStore);
         }
     }
 
     public void close() {
-        redisTransporterFactoryAdapter.close();
+        redisStoreFactoryAdapter.close();
     }
 }
