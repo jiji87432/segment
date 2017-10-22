@@ -11,7 +11,7 @@ import java.io.IOException;
  *
  * @author lry
  */
-public class RedisStoreFactoryAdapter {
+public class RedisStoreFactory {
 
     @SuppressWarnings("rawtypes")
 	private RedisStore redisStore;
@@ -19,7 +19,7 @@ public class RedisStoreFactoryAdapter {
     private RedisPoolConfig poolConfig;
     private RedisPolicy policy = RedisPolicy.single; // 缓存策略，single:单机,sharded:分片,cluster:集群
 
-    public RedisStoreFactoryAdapter(RedisPoolConfig poolConfig, RedisPolicy policy) {
+    public RedisStoreFactory(RedisPoolConfig poolConfig, RedisPolicy policy) {
         this.policy = policy;
         this.poolConfig = poolConfig;
         initRedisFactory();

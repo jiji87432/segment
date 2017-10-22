@@ -1,7 +1,7 @@
 package io.segment.redis;
 
 import io.segment.redis.support.RedisService;
-import io.segment.redis.support.RedisStoreFactoryAdapter;
+import io.segment.redis.support.RedisStoreFactory;
 
 import java.io.Closeable;
 import java.util.Set;
@@ -15,21 +15,21 @@ import redis.clients.jedis.BinaryJedisPubSub;
  */
 public class RedisCacheProxy implements Closeable {
 
-    private RedisStoreFactoryAdapter redisStoreFactoryAdapter;
+    private RedisStoreFactory redisStoreFactory;
 
-    public RedisCacheProxy(RedisStoreFactoryAdapter redisStoreFactoryAdapter) {
-        this.redisStoreFactoryAdapter = redisStoreFactoryAdapter;
-        if (this.redisStoreFactoryAdapter == null) {
+    public RedisCacheProxy(RedisStoreFactory redisStoreFactory) {
+        this.redisStoreFactory = redisStoreFactory;
+        if (this.redisStoreFactory == null) {
             throw new RuntimeException("jedis handler adapter must configuration");
         }
     }
 
     public RedisService getResource() {
-        return this.redisStoreFactoryAdapter.getRedisClientFactory().getResource();
+        return this.redisStoreFactory.getRedisClientFactory().getResource();
     }
 
 	public void returnResource(RedisService redisService) {
-        this.redisStoreFactoryAdapter.getRedisClientFactory().returnResource(redisService);
+        this.redisStoreFactory.getRedisClientFactory().returnResource(redisService);
     }
 
     public byte[] hget(byte[] key, byte[] fieldKey) {
@@ -134,6 +134,6 @@ public class RedisCacheProxy implements Closeable {
     }
 
     public void close() {
-        redisStoreFactoryAdapter.close();
+        redisStoreFactory.close();
     }
 }

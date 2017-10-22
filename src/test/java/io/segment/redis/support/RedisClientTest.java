@@ -1,6 +1,6 @@
 package io.segment.redis.support;
 
-import io.segment.redis.support.RedisStoreFactoryAdapter.RedisPolicy;
+import io.segment.redis.support.RedisStoreFactory.RedisPolicy;
 
 public class RedisClientTest {
 
@@ -9,8 +9,8 @@ public class RedisClientTest {
 		poolConfig.setHost("localhost");
 		poolConfig.setPort(6379);
 		RedisPolicy policy = RedisPolicy.single;
-		RedisStoreFactoryAdapter redisStoreFactoryAdapter = new RedisStoreFactoryAdapter(poolConfig, policy);
-		RedisStore<RedisService> redisClientFactory = redisStoreFactoryAdapter.getRedisClientFactory();
+		RedisStoreFactory redisStoreFactory = new RedisStoreFactory(poolConfig, policy);
+		RedisStore<RedisService> redisClientFactory = redisStoreFactory.getRedisClientFactory();
 		RedisService redisService = redisClientFactory.getResource();
 		redisService.set("key1", System.currentTimeMillis()+"");
 		System.out.println(redisService.get("key1"));
