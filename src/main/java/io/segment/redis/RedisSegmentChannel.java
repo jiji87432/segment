@@ -31,7 +31,6 @@ public class RedisSegmentChannel extends BinaryJedisPubSub implements CacheExpir
     private static String channel = Segment.getConfig().getProperty("redis.channel_name");
     private final static RedisSegmentChannel instance = new RedisSegmentChannel("default");
     private final Thread thread_subscribe;
-
     private RedisStoreService redisStoreService;
 
     /**
@@ -60,11 +59,8 @@ public class RedisSegmentChannel extends BinaryJedisPubSub implements CacheExpir
                     redisStoreService.subscribe(RedisSegmentChannel.this, SafeEncoder.encode(channel));
                 }
             });
-
             thread_subscribe.start();
-
             log.info("Connected to channel:" + this.name + ", time " + (System.currentTimeMillis() - ct) + " ms.");
-
         } catch (Exception e) {
             throw new CacheException(e);
         }
@@ -89,8 +85,9 @@ public class RedisSegmentChannel extends BinaryJedisPubSub implements CacheExpir
                     obj.setLevel(LEVEL_2);
                     CacheManager.set(LEVEL_1, region, key, obj.getValue());
                 }
-            } else
-                obj.setLevel(LEVEL_1);
+            } else {
+            	obj.setLevel(LEVEL_1);
+            }
         }
         return obj;
     }
@@ -98,15 +95,15 @@ public class RedisSegmentChannel extends BinaryJedisPubSub implements CacheExpir
     /**
      * 写入缓存
      *
-     * @param region : Cache Region name
-     * @param key    : Cache key
-     * @param value  : Cache value
+     * @param region
+     * @param key
+     * @param value
      */
     public void set(String region, Object key, Object value) {
         if (region != null && key != null) {
-            if (value == null)
-                evict(region, key);
-            else {
+            if (value == null) {
+            	evict(region, key);
+            } else {
                 // 分几种情况
                 // Object obj1 = CacheManager.get(LEVEL_1, region, key);
                 // Object obj2 = CacheManager.get(LEVEL_2, region, key);
@@ -119,14 +116,13 @@ public class RedisSegmentChannel extends BinaryJedisPubSub implements CacheExpir
                 CacheManager.set(LEVEL_2, region, key, value);
             }
         }
-        // log.info("write data to cache region="+region+",key="+key+",value="+value);
     }
     
     public void set(String region, Object key, Object value, Integer expireInSec) {
         if (region != null && key != null) {
-            if (value == null)
+            if (value == null) {
                 evict(region, key);
-            else {
+            } else {
                 // 分几种情况
                 // Object obj1 = CacheManager.get(LEVEL_1, region, key);
                 // Object obj2 = CacheManager.get(LEVEL_2, region, key);
@@ -139,7 +135,6 @@ public class RedisSegmentChannel extends BinaryJedisPubSub implements CacheExpir
                 CacheManager.set(LEVEL_2, region, key, value, expireInSec);
             }
         }
-        // log.info("write data to cache region="+region+",key="+key+",value="+value);
     }
 
     /**
@@ -197,14 +192,13 @@ public class RedisSegmentChannel extends BinaryJedisPubSub implements CacheExpir
     @Override
     @SuppressWarnings("rawtypes")
     public void notify(String region, Object key) {
-
         log.debug("Cache data expired, region=" + region + ",key=" + key);
-
         // 删除二级缓存
-        if (key instanceof List)
-            CacheManager.batchEvict(LEVEL_2, region, (List) key);
-        else
+        if (key instanceof List) {
+        	CacheManager.batchEvict(LEVEL_2, region, (List) key);
+        } else {
             CacheManager.evict(LEVEL_2, region, key);
+        }
 
         // 发送广播
         _sendEvictCmd(region, key);
@@ -249,10 +243,11 @@ public class RedisSegmentChannel extends BinaryJedisPubSub implements CacheExpir
      */
     @SuppressWarnings("rawtypes")
     protected void onDeleteCacheKey(String region, Object key) {
-        if (key instanceof List)
-            CacheManager.batchEvict(LEVEL_1, region, (List) key);
-        else
+        if (key instanceof List) {
+        	CacheManager.batchEvict(LEVEL_1, region, (List) key);
+        } else {
             CacheManager.evict(LEVEL_1, region, key);
+        }
         log.debug("Received cache evict message, region=" + region + ",key=" + key);
     }
 
@@ -282,9 +277,9 @@ public class RedisSegmentChannel extends BinaryJedisPubSub implements CacheExpir
 
         try {
             Command cmd = Command.parse(message);
-
-            if (cmd == null || cmd.isLocalCommand())
-                return;
+            if (cmd == null || cmd.isLocalCommand()) {
+            	return;
+            }
 
             switch (cmd.getOperator()) {
                 case Command.OPT_DELETE_KEY:

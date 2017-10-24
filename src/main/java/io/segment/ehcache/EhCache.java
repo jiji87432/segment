@@ -43,16 +43,16 @@ public class EhCache implements Cache, CacheEventListener {
 	 */
 	public Object get(Object key) throws CacheException {
 		try {
-			if ( key == null ) 
+			if ( key == null ) {
 				return null;
-			else {
+			} else {
                 Element element = cache.get( key );
-				if ( element != null )
+				if ( element != null ) {
 					return element.getObjectValue();				
+				}
 			}
 			return null;
-		}
-		catch (net.sf.ehcache.CacheException e) {
+		} catch (net.sf.ehcache.CacheException e) {
 			throw new CacheException( e );
 		}
 	}
@@ -81,17 +81,13 @@ public class EhCache implements Cache, CacheEventListener {
 		try {
 			Element element = new Element( key, value );
 			cache.put( element );
-		}
-		catch (IllegalArgumentException e) {
+		} catch (IllegalArgumentException e) {
+			throw new CacheException( e );
+		} catch (IllegalStateException e) {
+			throw new CacheException( e );
+		} catch (net.sf.ehcache.CacheException e) {
 			throw new CacheException( e );
 		}
-		catch (IllegalStateException e) {
-			throw new CacheException( e );
-		}
-		catch (net.sf.ehcache.CacheException e) {
-			throw new CacheException( e );
-		}
-
 	}
 
 	/**
@@ -105,11 +101,9 @@ public class EhCache implements Cache, CacheEventListener {
 	public void evict(Object key) throws CacheException {
 		try {
 			cache.remove( key );
-		}
-		catch (IllegalStateException e) {
+		} catch (IllegalStateException e) {
 			throw new CacheException( e );
-		}
-		catch (net.sf.ehcache.CacheException e) {
+		} catch (net.sf.ehcache.CacheException e) {
 			throw new CacheException( e );
 		}
 	}
@@ -128,11 +122,9 @@ public class EhCache implements Cache, CacheEventListener {
 	public void clear() throws CacheException {
 		try {
 			cache.removeAll();
-		}
-		catch (IllegalStateException e) {
+		} catch (IllegalStateException e) {
 			throw new CacheException( e );
-		}
-		catch (net.sf.ehcache.CacheException e) {
+		} catch (net.sf.ehcache.CacheException e) {
 			throw new CacheException( e );
 		}
 	}
@@ -145,11 +137,9 @@ public class EhCache implements Cache, CacheEventListener {
 	public void destroy() throws CacheException {
 		try {
 			cache.getCacheManager().removeCache( cache.getName() );
-		}
-		catch (IllegalStateException e) {
+		} catch (IllegalStateException e) {
 			throw new CacheException( e );
-		}
-		catch (net.sf.ehcache.CacheException e) {
+		} catch (net.sf.ehcache.CacheException e) {
 			throw new CacheException( e );
 		}
 	}
@@ -189,14 +179,11 @@ public class EhCache implements Cache, CacheEventListener {
 			Element element = new Element( key, value );
 			element.setTimeToLive(expireInSec);
 			cache.put( element );
-		}
-		catch (IllegalArgumentException e) {
+		} catch (IllegalArgumentException e) {
 			throw new CacheException( e );
-		}
-		catch (IllegalStateException e) {
+		} catch (IllegalStateException e) {
 			throw new CacheException( e );
-		}
-		catch (net.sf.ehcache.CacheException e) {
+		} catch (net.sf.ehcache.CacheException e) {
 			throw new CacheException( e );
 		}
 	}

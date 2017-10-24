@@ -66,8 +66,7 @@ public class EhCacheFactory implements CacheFactory {
 			            _CacheManager.put(name, ehcache);
 	            	}
 	            }
-		    }
-	        catch (net.sf.ehcache.CacheException e) {
+		    } catch (net.sf.ehcache.CacheException e) {
 	            throw new CacheException(e);
 	        }
     	}
@@ -88,8 +87,9 @@ public class EhCacheFactory implements CacheFactory {
 		
 		// 如果指定了名称,那么尝试获取已有实例
 		String ehcacheName = (String)props.get(KEY_EHCACHE_NAME);
-		if (ehcacheName != null && ehcacheName.trim().length() > 0)
+		if (ehcacheName != null && ehcacheName.trim().length() > 0) {
 			manager = CacheManager.getCacheManager(ehcacheName);
+		}
 		if (manager == null) {
 			// 指定了配置文件路径? 加载之
 			if (props.containsKey(KEY_EHCACHE_CONFIG_XML)) {

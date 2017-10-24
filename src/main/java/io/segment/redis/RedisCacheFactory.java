@@ -21,7 +21,6 @@ import java.util.concurrent.ConcurrentHashMap;
 public class RedisCacheFactory implements CacheFactory {
 
     private static RedisStoreService redisStoreService;
-
     protected ConcurrentHashMap<String, RedisCache> caches = new ConcurrentHashMap<>();
 
     public String name() {
@@ -52,7 +51,6 @@ public class RedisCacheFactory implements CacheFactory {
     @Override
     public void start(Properties props) throws CacheException {
         RedisPoolConfig config = new RedisPoolConfig();
-
         config.setHost(getProperty(props, "host", "127.0.0.1"));
         config.setPort(getProperty(props, "port", 6379));
         config.setPassword(props.getProperty("password", null));
@@ -70,7 +68,6 @@ public class RedisCacheFactory implements CacheFactory {
         config.setSoftMinEvictableIdleTimeMillis(getProperty(props, "softMinEvictableIdleTimeMillis", 10));
         config.setTimeBetweenEvictionRunsMillis(getProperty(props, "timeBetweenEvictionRunsMillis", 10));
         config.setLifo(getProperty(props, "lifo", false));
-
         config.setDatabase(getProperty(props, "database", 0));
         
         String redisPolicy = getProperty(props, "policy", "single");
@@ -99,4 +96,5 @@ public class RedisCacheFactory implements CacheFactory {
     private static boolean getProperty(Properties props, String key, boolean defaultValue) {
         return "true".equalsIgnoreCase(props.getProperty(key, String.valueOf(defaultValue)).trim());
     }
+    
 }

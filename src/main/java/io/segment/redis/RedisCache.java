@@ -55,35 +55,40 @@ public class RedisCache implements Cache {
     }
 
     protected byte[] getKeyName(Object key) {
-        if (key instanceof Number)
+        if (key instanceof Number) {
             return ("I:" + key).getBytes();
-        else if (key instanceof String || key instanceof StringBuilder || key instanceof StringBuffer)
+        } else if (key instanceof String || key instanceof StringBuilder || key instanceof StringBuffer) {
             return ("S:" + key).getBytes();
+        }
         return ("O:" + key).getBytes();
     }
 
     public Object get(Object key) throws CacheException {
-        if (null == key)
-            return null;
+        if (null == key) {
+        	return null;
+        }
         Object obj = null;
         try {
             byte[] b = redisStoreService.hget(region2, getKeyName(key));
-            if (b != null)
-                obj = SerializationUtils.deserialize(b);
+            if (b != null) {
+            	obj = SerializationUtils.deserialize(b);
+            }
         } catch (Exception e) {
             log.error("Error occured when get data from redis2 cache", e);
-            if (e instanceof IOException || e instanceof NullPointerException)
-                evict(key);
+            if (e instanceof IOException || e instanceof NullPointerException) {
+            	evict(key);
+            }
         }
         return obj;
     }
 
     public void put(Object key, Object value) throws CacheException {
-        if (key == null)
-            return;
-        if (value == null)
-            evict(key);
-        else {
+        if (key == null) {
+        	return;
+        }
+        if (value == null){
+        	evict(key);
+        } else {
             try {
                 redisStoreService.hset(region2, getKeyName(key), SerializationUtils.serialize(value));
             } catch (Exception e) {
@@ -97,8 +102,9 @@ public class RedisCache implements Cache {
     }
 
     public void evict(Object key) throws CacheException {
-        if (key == null)
-            return;
+        if (key == null) {
+        	return;
+        }
         try {
             redisStoreService.hdel(region2, getKeyName(key));
         } catch (Exception e) {
@@ -108,8 +114,9 @@ public class RedisCache implements Cache {
 
     @SuppressWarnings("rawtypes")
     public void evict(List keys) throws CacheException {
-        if (keys == null || keys.size() == 0)
-            return;
+        if (keys == null || keys.size() == 0) {
+        	return;
+        }
         try {
             int size = keys.size();
             byte[][] okeys = new byte[size][];
@@ -144,11 +151,12 @@ public class RedisCache implements Cache {
 
 	@Override
 	public void put(Object key, Object value, Integer expireInSec) throws CacheException {
-		if (key == null)
-            return;
-        if (value == null)
-            evict(key);
-        else {
+		if (key == null) {
+			return;
+		}
+        if (value == null) {
+        	evict(key);
+        } else {
             try {
                 redisStoreService.hset(region2, getKeyName(key), SerializationUtils.serialize(value), expireInSec);
             } catch (Exception e) {
@@ -161,4 +169,5 @@ public class RedisCache implements Cache {
 	public void update(Object key, Object value, Integer expireInSec) throws CacheException {
 		put(key, value, expireInSec);
 	}
+	
 }
