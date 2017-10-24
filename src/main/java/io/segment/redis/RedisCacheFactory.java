@@ -23,10 +23,6 @@ public class RedisCacheFactory implements CacheFactory {
     private static RedisStoreService redisStoreService;
     protected ConcurrentHashMap<String, RedisCache> caches = new ConcurrentHashMap<>();
 
-    public String name() {
-        return "redis";
-    }
-
     // 这个实现有个问题,如果不使用RedisCacheProvider,但又使用RedisCacheChannel,这就NPE了
     public RedisStoreService getResource() {
         if (redisStoreService == null) {
@@ -34,18 +30,6 @@ public class RedisCacheFactory implements CacheFactory {
         }
 
         return redisStoreService;
-    }
-
-    @Override
-    public Cache buildCache(String regionName, boolean autoCreate, CacheExpiredListener listener) throws CacheException {
-        // 虽然这个实现在并发时有概率出现同一各regionName返回不同的实例
-        // 但返回的实例一次性使用,所以加锁了并没有增加收益
-        RedisCache cache = caches.get(regionName);
-        if (cache == null) {
-            cache = new RedisCache(regionName, redisStoreService);
-            caches.put(regionName, cache);
-        }
-        return cache;
     }
 
     @Override
@@ -73,6 +57,18 @@ public class RedisCacheFactory implements CacheFactory {
         String redisPolicy = getProperty(props, "policy", "single");
         redisStoreService = new RedisStoreService(new RedisStoreFactory(config, RedisStoreFactory.RedisPolicy.valueOf(redisPolicy)));
 
+    }
+    
+    @Override
+    public Cache buildCache(String regionName, boolean autoCreate, CacheExpiredListener listener) throws CacheException {
+        // 虽然这个实现在并发时有概率出现同一各regionName返回不同的实例
+        // 但返回的实例一次性使用,所以加锁了并没有增加收益
+        RedisCache cache = caches.get(regionName);
+        if (cache == null) {
+            cache = new RedisCache(regionName, redisStoreService);
+            caches.put(regionName, cache);
+        }
+        return cache;
     }
 
     @Override

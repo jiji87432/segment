@@ -25,9 +25,7 @@ public class CacheManager {
 
 	private static CacheFactory l1_provider;
 	private static CacheFactory l2_provider;
-	
 	private static CacheExpiredListener listener;
-	
 	private static String serializer ;
 	
 	/**
@@ -69,7 +67,7 @@ public class CacheManager {
 	private final static Properties getProviderProperties(Properties props, CacheFactory provider) {
 		Properties new_props = new Properties();
 		Enumeration<Object> keys = props.keys();
-		String prefix = provider.name() + '.';
+		String prefix = "."; //provider.name() + '.';
 		while(keys.hasMoreElements()){
 			String key = (String)keys.nextElement();
 			if(key.startsWith(prefix)){

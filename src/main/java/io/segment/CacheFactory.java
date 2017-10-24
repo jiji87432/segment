@@ -7,7 +7,7 @@ import io.segment.support.CacheExpiredListener;
 import java.util.Properties;
 
 /**
- * Support for pluggable caches.
+ * The Cache Factory.
  * 
  * @author lry
  */
@@ -15,35 +15,27 @@ import java.util.Properties;
 public interface CacheFactory {
 
 	/**
-	 * Cache ID name
+	 * Start cache factory
 	 * 
-	 * @return return cache provider name
-	 */
-	String name();
-	
-	/**
-	 * Configure the cache
-	 *
-	 * @param regionName the name of the cache region
-	 * @param autoCreate autoCreate settings
-	 * @param listener listener for expired elements
-	 * @return return cache instance
-	 * @throws CacheException cache exception
-	 */
-	Cache buildCache(String regionName, boolean autoCreate, CacheExpiredListener listener) throws CacheException;
-
-	/**
-	 * Callback to perform any necessary initialization of the underlying cache implementation
-	 * during SessionFactory construction.
-	 *
-	 * @param props current configuration settings.
+	 * @param props
+	 * @throws CacheException
 	 */
 	void start(Properties props) throws CacheException;
 
 	/**
-	 * Callback to perform any necessary cleanup of the underlying cache implementation
-	 * during SessionFactory.close().
+	 * Build configure the cache
+	 * 
+	 * @param regionName
+	 * @param autoCreate
+	 * @param listener
+	 * @return
+	 * @throws CacheException
+	 */
+	Cache buildCache(String regionName, boolean autoCreate, CacheExpiredListener listener) throws CacheException;
+
+	/**
+	 * Stop cache factory
 	 */
 	void stop();
-	
+
 }
