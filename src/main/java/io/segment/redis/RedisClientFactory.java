@@ -54,11 +54,11 @@ public class RedisClientFactory implements Closeable
     }
 
     /**
-     * The Get Redis Service.
+     * The Get Redis Client.
      *
      * @return
      */
-    public RedisClient getRedisService(){
+    public RedisClient getRedisClient(){
         switch (redisConfig.getRedisType()){
             case SINGLE: return new SingleRedisClient(jedisPool.getResource());
             case CLUSTER: return new ClusterRedisClient(jedisCluster);
@@ -68,11 +68,11 @@ public class RedisClientFactory implements Closeable
     }
 
     /**
-     * The Return Redis Service.
+     * The Return Redis Client.
      *
      * @param redisClient
      */
-    public void returnRedisService(RedisClient redisClient){
+    public void returnRedisClient(RedisClient redisClient){
         try{
             redisClient.close();
         } catch (Exception e){
@@ -153,101 +153,101 @@ public class RedisClientFactory implements Closeable
     public byte[] hget(byte[] key, byte[] fieldKey) {
         RedisClient redisClient = null;
         try {
-            redisClient = this.getRedisService();
+            redisClient = this.getRedisClient();
             return redisClient.hget(key, fieldKey);
         } finally {
-            this.returnRedisService(redisClient);
+            this.returnRedisClient(redisClient);
         }
     }
 
     public void hset(byte[] key, byte[] fieldKey, byte[] val) {
         RedisClient redisClient = null;
         try {
-            redisClient = this.getRedisService();
+            redisClient = this.getRedisClient();
             redisClient.hset(key, fieldKey, val);
         } finally {
-            this.returnRedisService(redisClient);
+            this.returnRedisClient(redisClient);
         }
     }
 
     public void hset(byte[] key, byte[] fieldKey, byte[] val, int expireInSec) {
         RedisClient redisClient = null;
         try {
-            redisClient = this.getRedisService();
+            redisClient = this.getRedisClient();
             redisClient.hset(key, fieldKey, val);
             redisClient.expire(key, expireInSec);
         } finally {
-            this.returnRedisService(redisClient);
+            this.returnRedisClient(redisClient);
         }
     }
 
     public void hdel(byte[] key, byte[]... fieldKey) {
         RedisClient redisClient = null;
         try {
-            redisClient = this.getRedisService();
+            redisClient = this.getRedisClient();
             redisClient.hdel(key, fieldKey);
         } finally {
-            this.returnRedisService(redisClient);
+            this.returnRedisClient(redisClient);
         }
     }
 
     public Set<String> hkeys(String key) {
         RedisClient redisClient = null;
         try {
-            redisClient = this.getRedisService();
+            redisClient = this.getRedisClient();
             return redisClient.hkeys(key);
         } finally {
-            this.returnRedisService(redisClient);
+            this.returnRedisClient(redisClient);
         }
     }
 
     public Set<byte[]> hkeys(byte[] key) {
         RedisClient redisClient = null;
         try {
-            redisClient = this.getRedisService();
+            redisClient = this.getRedisClient();
             return redisClient.hkeys(key);
         } finally {
-            this.returnRedisService(redisClient);
+            this.returnRedisClient(redisClient);
         }
     }
 
     public void del(String key) {
         RedisClient redisClient = null;
         try {
-            redisClient = this.getRedisService();
+            redisClient = this.getRedisClient();
             redisClient.del(key);
         } finally {
-            this.returnRedisService(redisClient);
+            this.returnRedisClient(redisClient);
         }
     }
 
     public void del(byte[] key) {
         RedisClient redisClient = null;
         try {
-            redisClient = this.getRedisService();
+            redisClient = this.getRedisClient();
             redisClient.del(key);
         } finally {
-            this.returnRedisService(redisClient);
+            this.returnRedisClient(redisClient);
         }
     }
 
     public void subscribe(BinaryJedisPubSub binaryJedisPubSub, byte[]... channels) {
         RedisClient redisClient = null;
         try {
-            redisClient = this.getRedisService();
+            redisClient = this.getRedisClient();
             redisClient.subscribe(binaryJedisPubSub, channels);
         } finally {
-            this.returnRedisService(redisClient);
+            this.returnRedisClient(redisClient);
         }
     }
 
     public void publish(byte[] channel, byte[] message) {
         RedisClient redisClient = null;
         try {
-            redisClient = this.getRedisService();
+            redisClient = this.getRedisClient();
             redisClient.publish(channel, message);
         } finally {
-            this.returnRedisService(redisClient);
+            this.returnRedisClient(redisClient);
         }
     }
 
