@@ -1,4 +1,4 @@
-package io.segment.redis.support;
+package io.segment.redis.client;
 
 import java.io.Closeable;
 import java.util.Collection;
@@ -29,7 +29,7 @@ import redis.clients.jedis.params.sortedset.ZIncrByParams;
  *
  * @author lry
  */
-public interface RedisService extends JedisCommands, BasicCommands, Closeable {
+public interface RedisClient extends JedisCommands, BasicCommands, Closeable {
 
 	Object getClient();
 	

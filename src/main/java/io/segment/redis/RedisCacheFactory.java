@@ -5,8 +5,7 @@ import io.segment.Cache;
 import io.segment.CacheFactory;
 import io.segment.Segment;
 import io.segment.exception.CacheException;
-import io.segment.redis.support.RedisPoolConfig;
-import io.segment.redis.support.RedisServiceFactory;
+import io.segment.redis.client.RedisConfig;
 import io.segment.support.CacheExpiredListener;
 
 import java.util.Properties;
@@ -20,21 +19,21 @@ import java.util.concurrent.ConcurrentHashMap;
 @Extension("redis")
 public class RedisCacheFactory implements CacheFactory {
 
-    private static RedisServiceFactory redisServiceFactory;
+    private static RedisClientFactory redisClientFactory;
     protected ConcurrentHashMap<String, RedisCache> caches = new ConcurrentHashMap<>();
 
     // 这个实现有个问题,如果不使用RedisCacheProvider,但又使用RedisCacheChannel,这就NPE了
-    public RedisServiceFactory getResource() {
-        if (redisServiceFactory == null) {
+    public RedisClientFactory getResource() {
+        if (redisClientFactory == null) {
             this.start(Segment.getConfig());
         }
 
-        return redisServiceFactory;
+        return redisClientFactory;
     }
 
     @Override
     public void start(Properties props) throws CacheException {
-        RedisPoolConfig config = new RedisPoolConfig();
+        RedisConfig config = new RedisConfig();
         config.setHost(getProperty(props, "host", "127.0.0.1"));
         config.setPort(getProperty(props, "port", 6379));
         config.setPassword(props.getProperty("password", null));
@@ -55,7 +54,7 @@ public class RedisCacheFactory implements CacheFactory {
         config.setDatabase(getProperty(props, "database", 0));
         
         String redisPolicy = getProperty(props, "policy", "single");
-        redisServiceFactory = new RedisServiceFactory(config);
+        redisClientFactory = new RedisClientFactory(config);
     }
     
     @Override
@@ -64,7 +63,7 @@ public class RedisCacheFactory implements CacheFactory {
         // 但返回的实例一次性使用,所以加锁了并没有增加收益
         RedisCache cache = caches.get(regionName);
         if (cache == null) {
-            cache = new RedisCache(regionName, redisServiceFactory);
+            cache = new RedisCache(regionName, redisClientFactory);
             caches.put(regionName, cache);
         }
         return cache;
@@ -72,7 +71,7 @@ public class RedisCacheFactory implements CacheFactory {
 
     @Override
     public void stop() {
-        redisServiceFactory.close();
+        redisClientFactory.close();
         caches.clear();
     }
 

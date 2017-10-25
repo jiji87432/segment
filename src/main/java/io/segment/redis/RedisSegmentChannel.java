@@ -4,7 +4,6 @@ import io.neural.extension.Extension;
 import io.segment.SegmentChannel;
 import io.segment.Segment;
 import io.segment.exception.CacheException;
-import io.segment.redis.support.RedisServiceFactory;
 import io.segment.support.CacheExpiredListener;
 import io.segment.support.CacheManager;
 import io.segment.support.CacheObject;
@@ -32,7 +31,7 @@ public class RedisSegmentChannel extends BinaryJedisPubSub implements CacheExpir
     private static String channel = Segment.getConfig().getProperty("redis.channel_name");
     private final static RedisSegmentChannel instance = new RedisSegmentChannel("default");
     private final Thread thread_subscribe;
-    private RedisServiceFactory redisServiceFactory;
+    private RedisClientFactory redisClientFactory;
 
     /**
      * 单例方法
@@ -53,11 +52,11 @@ public class RedisSegmentChannel extends BinaryJedisPubSub implements CacheExpir
         try {
             long ct = System.currentTimeMillis();
             CacheManager.initCacheProvider(this);
-            redisServiceFactory = new RedisCacheFactory().getResource();
+            redisClientFactory = new RedisCacheFactory().getResource();
             thread_subscribe = new Thread(new Runnable() {
                 @Override
                 public void run() {
-                    redisServiceFactory.subscribe(RedisSegmentChannel.this, SafeEncoder.encode(channel));
+                    redisClientFactory.subscribe(RedisSegmentChannel.this, SafeEncoder.encode(channel));
                 }
             });
             thread_subscribe.start();
@@ -220,7 +219,7 @@ public class RedisSegmentChannel extends BinaryJedisPubSub implements CacheExpir
         // 发送广播
         Command cmd = new Command(Command.OPT_DELETE_KEY, region, key);
         try {
-            redisServiceFactory.publish(SafeEncoder.encode(channel), cmd.toBuffers());
+            redisClientFactory.publish(SafeEncoder.encode(channel), cmd.toBuffers());
         } catch (Exception e) {
             log.error("Unable to delete cache,region=" + region + ",key=" + key, e);
         }
@@ -235,7 +234,7 @@ public class RedisSegmentChannel extends BinaryJedisPubSub implements CacheExpir
         // 发送广播
         Command cmd = new Command(Command.OPT_CLEAR_KEY, region, "");
         try {
-            redisServiceFactory.publish(SafeEncoder.encode(channel), cmd.toBuffers());
+            redisClientFactory.publish(SafeEncoder.encode(channel), cmd.toBuffers());
         } catch (Exception e) {
             log.error("Unable to clear cache,region=" + region, e);
         }

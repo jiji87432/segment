@@ -1,10 +1,10 @@
-package io.segment.redis.support;
+package io.segment.redis.client;
 
 import org.apache.commons.pool2.impl.GenericObjectPoolConfig;
 
 import redis.clients.jedis.Protocol;
 
-public class RedisPoolConfig extends GenericObjectPoolConfig {
+public class RedisConfig extends GenericObjectPoolConfig {
 
     private String host;
     private int port;
