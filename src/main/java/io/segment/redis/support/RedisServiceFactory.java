@@ -143,4 +143,110 @@ public class RedisServiceFactory implements Closeable
         return new ShardedJedisPool(redisPoolConfig, jedisShardInfoList);
     }
 
+    /*
+     * 包装常用接口
+     * =====================================
+     */
+
+    public byte[] hget(byte[] key, byte[] fieldKey) {
+        RedisService redisService = null;
+        try {
+            redisService = this.getRedisService();
+            return redisService.hget(key, fieldKey);
+        } finally {
+            this.returnRedisService(redisService);
+        }
+    }
+
+    public void hset(byte[] key, byte[] fieldKey, byte[] val) {
+        RedisService redisService = null;
+        try {
+            redisService = this.getRedisService();
+            redisService.hset(key, fieldKey, val);
+        } finally {
+            this.returnRedisService(redisService);
+        }
+    }
+
+    public void hset(byte[] key, byte[] fieldKey, byte[] val, int expireInSec) {
+        RedisService redisService = null;
+        try {
+            redisService = this.getRedisService();
+            redisService.hset(key, fieldKey, val);
+            redisService.expire(key, expireInSec);
+        } finally {
+            this.returnRedisService(redisService);
+        }
+    }
+
+    public void hdel(byte[] key, byte[]... fieldKey) {
+        RedisService redisService = null;
+        try {
+            redisService = this.getRedisService();
+            redisService.hdel(key, fieldKey);
+        } finally {
+            this.returnRedisService(redisService);
+        }
+    }
+
+    public Set<String> hkeys(String key) {
+        RedisService redisService = null;
+        try {
+            redisService = this.getRedisService();
+            return redisService.hkeys(key);
+        } finally {
+            this.returnRedisService(redisService);
+        }
+    }
+
+    public Set<byte[]> hkeys(byte[] key) {
+        RedisService redisService = null;
+        try {
+            redisService = this.getRedisService();
+            return redisService.hkeys(key);
+        } finally {
+            this.returnRedisService(redisService);
+        }
+    }
+
+    public void del(String key) {
+        RedisService redisService = null;
+        try {
+            redisService = this.getRedisService();
+            redisService.del(key);
+        } finally {
+            this.returnRedisService(redisService);
+        }
+    }
+
+    public void del(byte[] key) {
+        RedisService redisService = null;
+        try {
+            redisService = this.getRedisService();
+            redisService.del(key);
+        } finally {
+            this.returnRedisService(redisService);
+        }
+    }
+
+    public void subscribe(BinaryJedisPubSub binaryJedisPubSub, byte[]... channels) {
+        RedisService redisService = null;
+        try {
+            redisService = this.getRedisService();
+            redisService.subscribe(binaryJedisPubSub, channels);
+        } finally {
+            this.returnRedisService(redisService);
+        }
+    }
+
+    public void publish(byte[] channel, byte[] message) {
+        RedisService redisService = null;
+        try {
+            redisService = this.getRedisService();
+            redisService.publish(channel, message);
+        } finally {
+            this.returnRedisService(redisService);
+        }
+    }
+
 }
