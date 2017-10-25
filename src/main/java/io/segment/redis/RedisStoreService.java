@@ -1,11 +1,11 @@
 package io.segment.redis;
 
 import io.segment.redis.support.RedisService;
-import io.segment.redis.support.RedisStoreFactory;
 
 import java.io.Closeable;
 import java.util.Set;
 
+import io.segment.redis.support.RedisServiceFactory;
 import redis.clients.jedis.BinaryJedisPubSub;
 
 /**
@@ -15,21 +15,21 @@ import redis.clients.jedis.BinaryJedisPubSub;
  */
 public class RedisStoreService implements Closeable {
 
-    private RedisStoreFactory redisStoreFactory;
+    private RedisServiceFactory redisServiceFactory;
 
-    public RedisStoreService(RedisStoreFactory redisStoreFactory) {
-        this.redisStoreFactory = redisStoreFactory;
-        if (this.redisStoreFactory == null) {
+    public RedisStoreService(RedisServiceFactory redisServiceFactory) {
+        this.redisServiceFactory = redisServiceFactory;
+        if (this.redisServiceFactory == null) {
             throw new RuntimeException("jedis handler adapter must configuration");
         }
     }
 
     public RedisService getResource() {
-        return this.redisStoreFactory.getRedisClientFactory().getResource();
+        return redisServiceFactory.getRedisService();
     }
 
 	public void returnResource(RedisService redisService) {
-        this.redisStoreFactory.getRedisClientFactory().returnResource(redisService);
+        redisServiceFactory.returnRedisService(redisService);
     }
 
     public byte[] hget(byte[] key, byte[] fieldKey) {
@@ -133,7 +133,8 @@ public class RedisStoreService implements Closeable {
         }
     }
 
+    @Override
     public void close() {
-        redisStoreFactory.close();
+        redisServiceFactory.close();
     }
 }

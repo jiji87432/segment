@@ -5,8 +5,8 @@ import io.segment.Cache;
 import io.segment.CacheFactory;
 import io.segment.Segment;
 import io.segment.exception.CacheException;
-import io.segment.redis.support.RedisStoreFactory;
 import io.segment.redis.support.RedisPoolConfig;
+import io.segment.redis.support.RedisServiceFactory;
 import io.segment.support.CacheExpiredListener;
 
 import java.util.Properties;
@@ -55,8 +55,7 @@ public class RedisCacheFactory implements CacheFactory {
         config.setDatabase(getProperty(props, "database", 0));
         
         String redisPolicy = getProperty(props, "policy", "single");
-        redisStoreService = new RedisStoreService(new RedisStoreFactory(config, RedisStoreFactory.RedisPolicy.valueOf(redisPolicy)));
-
+        redisStoreService = new RedisStoreService(new RedisServiceFactory(config));
     }
     
     @Override

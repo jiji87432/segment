@@ -63,6 +63,7 @@ public class RedisCache implements Cache {
         return ("O:" + key).getBytes();
     }
 
+    @Override
     public Object get(Object key) throws CacheException {
         if (null == key) {
         	return null;
@@ -82,6 +83,7 @@ public class RedisCache implements Cache {
         return obj;
     }
 
+    @Override
     public void put(Object key, Object value) throws CacheException {
         if (key == null) {
         	return;
@@ -97,10 +99,12 @@ public class RedisCache implements Cache {
         }
     }
 
+    @Override
     public void update(Object key, Object value) throws CacheException {
         put(key, value);
     }
 
+    @Override
     public void evict(Object key) throws CacheException {
         if (key == null) {
         	return;
@@ -112,8 +116,8 @@ public class RedisCache implements Cache {
         }
     }
 
-    @SuppressWarnings("rawtypes")
-    public void evict(List keys) throws CacheException {
+    @Override
+    public void evict(List<?> keys) throws CacheException {
         if (keys == null || keys.size() == 0) {
         	return;
         }
@@ -129,6 +133,7 @@ public class RedisCache implements Cache {
         }
     }
 
+    @Override
     public List<String> keys() throws CacheException {
         try {
             return new ArrayList<String>(redisStoreService.hkeys(region));
@@ -137,6 +142,7 @@ public class RedisCache implements Cache {
         }
     }
 
+    @Override
     public void clear() throws CacheException {
         try {
             redisStoreService.del(region2);
@@ -145,6 +151,7 @@ public class RedisCache implements Cache {
         }
     }
 
+    @Override
     public void destroy() throws CacheException {
         this.clear();
     }

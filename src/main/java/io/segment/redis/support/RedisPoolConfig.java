@@ -9,10 +9,9 @@ public class RedisPoolConfig extends GenericObjectPoolConfig {
     private String host;
     private int port;
     private String password;
-    
     private int database;
-
 	private int timeout = Protocol.DEFAULT_TIMEOUT;
+	private RedisType redisType;
 
     public String getHost() {
         return host;
@@ -53,5 +52,17 @@ public class RedisPoolConfig extends GenericObjectPoolConfig {
 	public void setDatabase(int database) {
 		this.database = database;
 	}
-	
+
+    public RedisType getRedisType() {
+        return redisType;
+    }
+
+    public void setRedisType(RedisType redisType) {
+        this.redisType = redisType;
+    }
+
+    public enum RedisType {
+        CLUSTER,SHARDED,SINGLE
+    }
+
 }

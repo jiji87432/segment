@@ -73,6 +73,7 @@ public class RedisSegmentChannel extends BinaryJedisPubSub implements CacheExpir
      * @param key    : Cache key
      * @return cache object
      */
+    @Override
     public CacheObject get(String region, Object key) {
         CacheObject obj = new CacheObject();
         obj.setRegion(region);
@@ -99,6 +100,7 @@ public class RedisSegmentChannel extends BinaryJedisPubSub implements CacheExpir
      * @param key
      * @param value
      */
+    @Override
     public void set(String region, Object key, Object value) {
         if (region != null && key != null) {
             if (value == null) {
@@ -117,7 +119,8 @@ public class RedisSegmentChannel extends BinaryJedisPubSub implements CacheExpir
             }
         }
     }
-    
+
+    @Override
     public void set(String region, Object key, Object value, Integer expireInSec) {
         if (region != null && key != null) {
             if (value == null) {
@@ -143,6 +146,7 @@ public class RedisSegmentChannel extends BinaryJedisPubSub implements CacheExpir
      * @param region : Cache Region name
      * @param key    : Cache key
      */
+    @Override
     public void evict(String region, Object key) {
         CacheManager.evict(LEVEL_1, region, key); // 删除一级缓存
         CacheManager.evict(LEVEL_2, region, key); // 删除二级缓存
@@ -155,8 +159,8 @@ public class RedisSegmentChannel extends BinaryJedisPubSub implements CacheExpir
      * @param region : Cache region name
      * @param keys   : Cache key
      */
-    @SuppressWarnings({"rawtypes"})
-    public void batchEvict(String region, List keys) {
+    @Override
+    public void batchEvict(String region, List<?> keys) {
         CacheManager.batchEvict(LEVEL_1, region, keys);
         CacheManager.batchEvict(LEVEL_2, region, keys);
         _sendEvictCmd(region, keys);
@@ -167,6 +171,7 @@ public class RedisSegmentChannel extends BinaryJedisPubSub implements CacheExpir
      *
      * @param region : Cache region name
      */
+    @Override
     public void clear(String region) throws CacheException {
         CacheManager.clear(LEVEL_1, region);
         CacheManager.clear(LEVEL_2, region);
@@ -179,6 +184,7 @@ public class RedisSegmentChannel extends BinaryJedisPubSub implements CacheExpir
      * @param region : Cache region name
      * @return key list
      */
+    @Override
     public List<?> keys(String region) throws CacheException {
         return CacheManager.keys(LEVEL_1, region);
     }
@@ -190,7 +196,6 @@ public class RedisSegmentChannel extends BinaryJedisPubSub implements CacheExpir
      * @param key    : cache key
      */
     @Override
-    @SuppressWarnings("rawtypes")
     public void notify(String region, Object key) {
         log.debug("Cache data expired, region=" + region + ",key=" + key);
         // 删除二级缓存
@@ -299,6 +304,7 @@ public class RedisSegmentChannel extends BinaryJedisPubSub implements CacheExpir
     /**
      * 关闭到通道的连接
      */
+    @Override
     public void close() {
         CacheManager.shutdown(LEVEL_1);
         if (isSubscribed()) {
