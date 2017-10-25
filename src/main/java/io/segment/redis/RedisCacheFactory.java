@@ -20,16 +20,16 @@ import java.util.concurrent.ConcurrentHashMap;
 @Extension("redis")
 public class RedisCacheFactory implements CacheFactory {
 
-    private static RedisStoreService redisStoreService;
+    private static RedisServiceFactory redisServiceFactory;
     protected ConcurrentHashMap<String, RedisCache> caches = new ConcurrentHashMap<>();
 
     // 这个实现有个问题,如果不使用RedisCacheProvider,但又使用RedisCacheChannel,这就NPE了
-    public RedisStoreService getResource() {
-        if (redisStoreService == null) {
+    public RedisServiceFactory getResource() {
+        if (redisServiceFactory == null) {
             this.start(Segment.getConfig());
         }
 
-        return redisStoreService;
+        return redisServiceFactory;
     }
 
     @Override
@@ -55,7 +55,7 @@ public class RedisCacheFactory implements CacheFactory {
         config.setDatabase(getProperty(props, "database", 0));
         
         String redisPolicy = getProperty(props, "policy", "single");
-        redisStoreService = new RedisStoreService(new RedisServiceFactory(config));
+        redisServiceFactory = new RedisServiceFactory(config);
     }
     
     @Override
@@ -64,7 +64,7 @@ public class RedisCacheFactory implements CacheFactory {
         // 但返回的实例一次性使用,所以加锁了并没有增加收益
         RedisCache cache = caches.get(regionName);
         if (cache == null) {
-            cache = new RedisCache(regionName, redisStoreService);
+            cache = new RedisCache(regionName, redisServiceFactory);
             caches.put(regionName, cache);
         }
         return cache;
@@ -72,7 +72,7 @@ public class RedisCacheFactory implements CacheFactory {
 
     @Override
     public void stop() {
-        redisStoreService.close();
+        redisServiceFactory.close();
         caches.clear();
     }
 
