@@ -26,17 +26,19 @@ public class JavaSerializer implements Serializer {
 			oos.writeObject(obj);
 			return baos.toByteArray();
 		} finally {
-			if(oos != null)
-			try {
-				oos.close();
-			} catch (IOException e) {}
+			if(oos != null){
+				try {
+					oos.close();
+				} catch (IOException e) {}
+			}
 		}
 	}
 
 	@Override
 	public Object deserialize(byte[] bits) throws IOException {
-		if(bits == null || bits.length == 0)
+		if(bits == null || bits.length == 0) {
 			return null;
+		}
 		ObjectInputStream ois = null;
 		try {
 			ByteArrayInputStream bais = new ByteArrayInputStream(bits);
@@ -45,10 +47,11 @@ public class JavaSerializer implements Serializer {
 		} catch (ClassNotFoundException e) {
 			throw new CacheException(e);
 		} finally {
-			if(ois != null)
-			try {
-				ois.close();
-			} catch (IOException e) {}
+			if(ois != null) {
+				try {
+					ois.close();
+				} catch (IOException e) {}
+			}
 		}
 	}
 	
