@@ -1,4 +1,4 @@
-package io.segment.redis.client;
+package io.segment.redis.support;
 
 import org.apache.commons.pool2.impl.GenericObjectPoolConfig;
 

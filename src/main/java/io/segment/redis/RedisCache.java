@@ -4,6 +4,7 @@ import io.neural.extension.Extension;
 import io.segment.Cache;
 import io.segment.Segment;
 import io.segment.exception.CacheException;
+import io.segment.redis.support.RedisClientFactory;
 import io.segment.serializer.SerializationUtils;
 
 import java.io.IOException;

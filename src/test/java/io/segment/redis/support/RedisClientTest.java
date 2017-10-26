@@ -1,8 +1,5 @@
 package io.segment.redis.support;
 
-import io.segment.redis.RedisClientFactory;
-import io.segment.redis.client.RedisConfig;
-import io.segment.redis.client.RedisClient;
 
 public class RedisClientTest {
 
@@ -15,6 +12,7 @@ public class RedisClientTest {
 		RedisClient redisClient = redisClientFactory.getRedisClient();
 		redisClient.set("key1", System.currentTimeMillis()+"");
 		System.out.println(redisClient.get("key1"));
+		redisClientFactory.close();
 	}
 	
 }

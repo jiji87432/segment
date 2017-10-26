@@ -1,15 +1,23 @@
-package io.segment.redis;
+package io.segment.redis.support;
+
+import io.segment.redis.support.client.ClusterRedisClient;
+import io.segment.redis.support.client.ShardedRedisClient;
+import io.segment.redis.support.client.SingleRedisClient;
 
 import java.io.Closeable;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 import java.util.regex.Pattern;
 
-import io.segment.redis.client.RedisConfig;
-import io.segment.redis.client.RedisClient;
-import io.segment.redis.client.support.ShardedRedisClient;
-import io.segment.redis.client.support.ClusterRedisClient;
-import io.segment.redis.client.support.SingleRedisClient;
-import redis.clients.jedis.*;
+import redis.clients.jedis.BinaryJedisPubSub;
+import redis.clients.jedis.HostAndPort;
+import redis.clients.jedis.JedisCluster;
+import redis.clients.jedis.JedisPool;
+import redis.clients.jedis.JedisShardInfo;
+import redis.clients.jedis.ShardedJedisPool;
 
 /**
  * The Redis Service Factory.

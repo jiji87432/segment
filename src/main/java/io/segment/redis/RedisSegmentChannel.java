@@ -1,9 +1,10 @@
 package io.segment.redis;
 
 import io.neural.extension.Extension;
-import io.segment.SegmentChannel;
 import io.segment.Segment;
+import io.segment.SegmentChannel;
 import io.segment.exception.CacheException;
+import io.segment.redis.support.RedisClientFactory;
 import io.segment.support.CacheExpiredListener;
 import io.segment.support.CacheManager;
 import io.segment.support.CacheObject;
@@ -200,7 +201,7 @@ public class RedisSegmentChannel extends BinaryJedisPubSub implements CacheExpir
         log.debug("Cache data expired, region=" + region + ",key=" + key);
         // 删除二级缓存
         if (key instanceof List) {
-        	CacheManager.batchEvict(LEVEL_2, region, (List) key);
+        	CacheManager.batchEvict(LEVEL_2, region, (List<?>) key);
         } else {
             CacheManager.evict(LEVEL_2, region, key);
         }

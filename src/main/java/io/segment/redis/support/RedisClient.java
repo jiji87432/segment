@@ -1,4 +1,4 @@
-package io.segment.redis.client;
+package io.segment.redis.support;
 
 import java.io.Closeable;
 import java.util.Collection;

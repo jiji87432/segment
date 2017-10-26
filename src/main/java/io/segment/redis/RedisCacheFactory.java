@@ -5,7 +5,9 @@ import io.segment.Cache;
 import io.segment.CacheFactory;
 import io.segment.Segment;
 import io.segment.exception.CacheException;
-import io.segment.redis.client.RedisConfig;
+import io.segment.redis.support.RedisClientFactory;
+import io.segment.redis.support.RedisConfig;
+import io.segment.redis.support.RedisConfig.RedisType;
 import io.segment.support.CacheExpiredListener;
 
 import java.util.Properties;
@@ -52,8 +54,8 @@ public class RedisCacheFactory implements CacheFactory {
         config.setTimeBetweenEvictionRunsMillis(getProperty(props, "timeBetweenEvictionRunsMillis", 10));
         config.setLifo(getProperty(props, "lifo", false));
         config.setDatabase(getProperty(props, "database", 0));
-        
-        String redisPolicy = getProperty(props, "policy", "single");
+        config.setRedisType(RedisType.valueOf(getProperty(props, "policy", RedisType.SINGLE.toString())));
+
         redisClientFactory = new RedisClientFactory(config);
     }
     

@@ -1,6 +1,6 @@
-package io.segment.redis.client.support;
+package io.segment.redis.support.client;
 
-import io.segment.redis.client.RedisClient;
+import io.segment.redis.support.RedisClient;
 
 import java.io.IOException;
 import java.util.Collection;
