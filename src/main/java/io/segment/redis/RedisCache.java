@@ -24,14 +24,17 @@ public class RedisCache implements Cache {
 
     private final static Logger log = LoggerFactory.getLogger(RedisCache.class);
 
-    // 记录region
+    /**
+     * 记录region
+     */
     protected byte[] region2;
     protected String region;
     protected RedisClientFactory redisClientFactory;
 
     public RedisCache(String region, RedisClientFactory redisClientFactory) {
         if (region == null || region.isEmpty()) {
-        	region = "_"; // 缺省region
+            // 缺省region
+        	region = "_";
         }
 
         region = getRegionName(region);

@@ -54,9 +54,9 @@ public class RedisClientFactory implements Closeable
      */
     public Object getResource(){
         switch (redisConfig.getRedisType()){
-            case SINGLE: return jedisPool.getResource();
+            case SINGLE: return jedisPool;
             case CLUSTER: return jedisCluster;
-            case SHARDED: return shardedJedisPool.getResource();
+            case SHARDED: return shardedJedisPool;
             default: throw new IllegalArgumentException(redisConfig.getRedisType().toString());
         }
     }
