@@ -1,8 +1,8 @@
-package io.segment.cache.session;
+package io.segment.session;
 
 import java.util.Map;
 
-import io.segment.cache.session.core.IdWorker;
+import io.segment.session.core.IdWorker;
 
 /**
  * The Session Manager

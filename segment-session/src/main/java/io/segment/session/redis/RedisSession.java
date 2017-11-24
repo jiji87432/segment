@@ -1,18 +1,18 @@
-package io.segment.cache.session.redis;
+package io.segment.session.redis;
 
 import java.io.IOException;
 import java.util.Collections;
 import java.util.Map;
 import java.util.Properties;
 
-import io.segment.cache.session.common.exception.SessionException;
-import io.segment.cache.session.core.IdWorker;
+import io.segment.session.common.exception.SessionException;
+import io.segment.session.core.IdWorker;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPoolConfig;
-import io.segment.cache.session.core.AbstractSession;
+import io.segment.session.core.AbstractSession;
 
 import com.google.common.base.Objects;
 import com.google.common.base.Strings;

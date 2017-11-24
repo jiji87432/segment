@@ -1,4 +1,4 @@
-package io.segment.cache.session;
+package io.segment.session;
 
 import junit.framework.Test;
 import junit.framework.TestCase;

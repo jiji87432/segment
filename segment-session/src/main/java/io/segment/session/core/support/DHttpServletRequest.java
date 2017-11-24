@@ -1,16 +1,15 @@
 
-package io.segment.cache.session.core.support;
+package io.segment.session.core.support;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import io.segment.cache.session.DSession;
+import io.segment.session.DSession;
+import io.segment.session.common.WebUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import io.segment.cache.session.common.WebUtils;
 
 /**
  * HttpServletRequest Wrapper

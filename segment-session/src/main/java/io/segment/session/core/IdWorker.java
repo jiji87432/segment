@@ -1,4 +1,4 @@
-package io.segment.cache.session.core;
+package io.segment.session.core;
 
 
 /**

@@ -1,9 +1,9 @@
-package io.segment.cache.session.redis;
+package io.segment.session.redis;
 
 import java.io.IOException;
 
-import io.segment.cache.session.DSession;
-import io.segment.cache.session.core.support.DSessionFilter;
+import io.segment.session.DSession;
+import io.segment.session.core.support.DSessionFilter;
 
 /**
  * Redis Session Filter

@@ -1,1 +1,1 @@
-io.segment.cache.session.redis.RedisSession
+io.segment.session.redis.RedisSession

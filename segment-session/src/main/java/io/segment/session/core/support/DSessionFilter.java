@@ -1,4 +1,4 @@
-package io.segment.cache.session.core.support;
+package io.segment.session.core.support;
 
 import java.io.IOException;
 import java.util.Map;
@@ -12,11 +12,10 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import io.segment.cache.session.DSession;
+import io.segment.session.DSession;
+import io.segment.session.common.WebUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import io.segment.cache.session.common.WebUtils;
 
 import com.google.common.base.Strings;
 

@@ -1,4 +1,4 @@
-package io.segment.cache.session.common;
+package io.segment.session.common;
 
 import java.io.IOException;
 import java.util.Map;

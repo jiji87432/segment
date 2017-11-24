@@ -1,1 +1,1 @@
-io.segment.cache.session.serializer.FastjsonSerializer
+io.segment.session.serializer.FastjsonSerializer

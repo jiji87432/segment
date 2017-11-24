@@ -1,4 +1,4 @@
-package io.segment.cache.session.common.exception;
+package io.segment.session.common.exception;
 
 /**
  * The Serialize Exception

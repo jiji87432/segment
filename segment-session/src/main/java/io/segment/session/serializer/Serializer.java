@@ -1,4 +1,4 @@
-package io.segment.cache.session.serializer;
+package io.segment.session.serializer;
 
 import java.util.Map;
 

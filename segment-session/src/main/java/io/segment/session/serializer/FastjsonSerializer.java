@@ -1,8 +1,8 @@
-package io.segment.cache.session.serializer;
+package io.segment.session.serializer;
 
 import java.util.Map;
 
-import io.segment.cache.session.common.exception.SerializeException;
+import io.segment.session.common.exception.SerializeException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

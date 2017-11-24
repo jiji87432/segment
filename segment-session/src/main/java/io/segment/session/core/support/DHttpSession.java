@@ -1,5 +1,5 @@
 
-package io.segment.cache.session.core.support;
+package io.segment.session.core.support;
 
 import java.util.Collections;
 import java.util.Enumeration;
@@ -10,7 +10,7 @@ import javax.servlet.ServletContext;
 import javax.servlet.http.HttpSession;
 import javax.servlet.http.HttpSessionContext;
 
-import io.segment.cache.session.DSession;
+import io.segment.session.DSession;
 
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;

@@ -1,10 +1,10 @@
-package io.segment.cache.session.core.worker;
+package io.segment.session.core.worker;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.UUID;
 
-import io.segment.cache.session.core.IdWorker;
+import io.segment.session.core.IdWorker;
 
 import com.google.common.base.Charsets;
 import com.google.common.hash.Hashing;

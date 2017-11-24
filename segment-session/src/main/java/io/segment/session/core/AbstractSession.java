@@ -1,16 +1,15 @@
-package io.segment.cache.session.core;
+package io.segment.session.core;
 
 import java.io.IOException;
 import java.util.Properties;
 
-import io.segment.cache.session.DSession;
-import io.segment.cache.session.core.worker.UuidIdWorker;
-import io.segment.cache.session.serializer.FastjsonSerializer;
-import io.segment.cache.session.serializer.Serializer;
+import io.segment.session.DSession;
+import io.segment.session.core.worker.UuidIdWorker;
+import io.segment.session.serializer.FastjsonSerializer;
+import io.segment.session.serializer.Serializer;
+import io.segment.session.common.PropertiesUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import io.segment.cache.session.common.PropertiesUtils;
 
 import com.google.common.base.Strings;
 import com.google.common.base.Throwables;

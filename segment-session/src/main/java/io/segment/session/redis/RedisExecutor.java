@@ -1,4 +1,4 @@
-package io.segment.cache.session.redis;
+package io.segment.session.redis;
 
 import java.util.Properties;
 import java.util.Set;
