@@ -6,12 +6,13 @@
     <artifactId>segment</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <packaging>pom</packaging>
-    <name>分布式数据片段</name>
-    <description>分布式数据片段</description>
+    <name>segment</name>
+    <description>segment</description>
 
     <modules>
         <module>segment-cache</module>
         <module>segment-session</module>
+        <module>segment-session-demo</module>
     </modules>
 
     <dependencyManagement>
@@ -24,6 +25,11 @@
             <dependency>
                 <groupId>io.segment</groupId>
                 <artifactId>segment-session</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.segment</groupId>
+                <artifactId>segment-session-demo</artifactId>
                 <version>${project.version}</version>
             </dependency>
         </dependencies>

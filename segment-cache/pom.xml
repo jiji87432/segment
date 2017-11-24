@@ -9,8 +9,8 @@
     </parent>
     
     <artifactId>segment-cache</artifactId>
-    <name>分布式缓存</name>
-    <description>分布式缓存</description>
+    <name>segment-cache</name>
+    <description>segment-cache</description>
 
     <properties>
         <jedis>2.9.0</jedis>

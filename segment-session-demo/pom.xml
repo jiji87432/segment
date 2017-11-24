@@ -10,6 +10,8 @@
 
     <artifactId>segment-session-demo</artifactId>
     <packaging>war</packaging>
+    <name>segment-session-demo</name>
+    <description>segment-session-demo</description>
 
     <properties>
         <spring.version>4.1.5.RELEASE</spring.version>
@@ -22,7 +24,6 @@
         <dependency>
             <groupId>io.segment</groupId>
             <artifactId>segment-session</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
         </dependency>
 
         <dependency>

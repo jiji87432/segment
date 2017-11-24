@@ -8,9 +8,9 @@
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
 
-	<artifactId>ms-session</artifactId>
-	<name>分布式会话</name>
-	<description>分布式会话</description>
+	<artifactId>segment-session</artifactId>
+	<name>segment-session</name>
+	<description>segment-session</description>
 
 	<properties>
 		<jedis>2.8.0</jedis>
