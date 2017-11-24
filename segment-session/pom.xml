@@ -9,6 +9,7 @@
 	</parent>
 
 	<artifactId>segment-session</artifactId>
+	<packaging>jar</packaging>
 	<name>segment-session</name>
 	<description>segment-session</description>
 
