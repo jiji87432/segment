@@ -1,0 +1,2 @@
+io.segment.cache.ehcache.JgroupsSegmentChannel
+io.segment.cache.redis.RedisSegmentChannel

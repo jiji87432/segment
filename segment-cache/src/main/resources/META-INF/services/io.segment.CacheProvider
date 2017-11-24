@@ -1,2 +1,0 @@
-io.segment.ehcache.EhCacheProvider
-io.segment.redis.RedisCacheProvider

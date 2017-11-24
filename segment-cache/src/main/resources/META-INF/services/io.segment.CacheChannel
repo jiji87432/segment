@@ -1,2 +1,0 @@
-io.segment.ehcache.JGroupsCacheChannel
-io.segment.redis.RedisCacheChannel

@@ -1,0 +1,2 @@
+io.segment.cache.ehcache.EhCache
+io.segment.cache.redis.RedisCache
